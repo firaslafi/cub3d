@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/09 22:28:33 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/02/10 12:53:22 by nnabaeei         ###   ########.fr       */
+/*   Created: 2023/03/14 17:00:17 by flafi             #+#    #+#             */
+/*   Updated: 2023/03/14 19:03:21 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+int	ft_isalpha(int c)
 
-char    *error_table(char *code);
-void    error_handler(char *error, int no);
-
-#endif
+{
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	else
+		return (0);
+}

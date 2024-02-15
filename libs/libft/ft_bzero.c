@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/09 22:46:15 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/02/11 11:39:22 by nnabaeei         ###   ########.fr       */
+/*   Created: 2023/03/18 14:13:51 by flafi             #+#    #+#             */
+/*   Updated: 2023/03/25 22:15:07 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "libft.h"
 
-# include "../include/cub_3d.h"
+void	ft_bzero(void *s, size_t n)
+{
+	int	i;
 
-# define WHITSPACE " \t\n\f\v\r"
-# define MAPCHRS "NEWS10D"
-
-
-typedef struct s_map t_map;
-
-
-
-#endif
+	i = 0;
+	while (n--)
+	{
+		((unsigned char *) s)[i] = (char) '\0';
+		i++;
+	}
+}

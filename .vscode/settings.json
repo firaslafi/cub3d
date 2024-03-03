@@ -5,6 +5,7 @@
         "cstdlib": "c",
         "atomic": "cpp",
         "memory": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "algorithm": "c"
     }
 }

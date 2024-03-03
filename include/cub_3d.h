@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:29:06 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/03/02 14:40:33 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 05:20:22 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_map{
 	char		*so_xpm;
 	char		*we_xpm;
 	char		*ea_xpm;
-	char		*sprite_texture;
+	// char		*sprite_texture;
 	int			floor_color[3];
 	char		**grid;
 	int			ceiling_color[3];
@@ -96,13 +96,13 @@ typedef struct s_pos{
 
 typedef struct s_player{
 	t_pos		pos;
-	int		plyr_x; // player x position in pixels
-	int		plyr_y; // player y position in pixels
-	double	angle;	// player angle
-	float	fov_rd;	// field of view in radians
-	int		rot;	// rotation flag
-	int		l_r;	// left right flag
-	int		u_d;	// up down flag
+	int			plyr_x; // player x position in pixels
+	int			plyr_y; // player y position in pixels
+	double		angle;	// player angle
+	float		fov_rd;	// field of view in radians
+	int			rot;	// rotation flag
+	int			l_r;	// left right flag
+	int			u_d;	// up down flag
 }		t_player;
 
 
@@ -116,11 +116,11 @@ typedef struct s_hud{
 	mlx_image_t		*circle;
 	mlx_image_t		*circle_bck;
 	mlx_image_t		*img_ci_bck;
+	mlx_texture_t	*ply;
 	mlx_image_t		*img_ply;
 	mlx_texture_t	*w_dot;
 	mlx_texture_t	*b_dot;
 	mlx_image_t		*img_wall;
-	mlx_texture_t	*ply;
 }	t_hud;
 
 typedef struct s_ray	//the ray structure

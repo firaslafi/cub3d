@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/02 05:25:17 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 05:22:02 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	initiate_hud(t_game *game)
 	game->hud.ply = NULL;
 	game->hud.img_ply = NULL;
 	game->hud.w_dot = NULL;
-	game->hud.img_wall = NULL;
 	game->hud.b_dot = NULL;
+	game->hud.img_wall = NULL;
 }
 
 void	initiate_game(t_game *game, char *file)
@@ -131,19 +131,19 @@ void	free_hud(t_game *game)
 {
 	mlx_delete_image(game->mlx, game->hud.circle); // delete the image
 	mlx_delete_image(game->mlx, game->hud.circle_bck); // delete the image
+	mlx_delete_image(game->mlx, game->hud.img_ci_bck); // delete the image
 	mlx_delete_image(game->mlx, game->hud.img_ply); // delete the image
 	mlx_delete_image(game->mlx, game->hud.img_wall); // delete the image
-	mlx_delete_image(game->mlx, game->hud.img_ci_bck); // delete the image
 	mlx_delete_texture(game->hud.w_dot);
 	mlx_delete_texture(game->hud.b_dot);
 	mlx_delete_texture(game->hud.ply);
 	if (game->hud.map)
 		free_array(game->hud.map);
-	
 }
 
 void	free_mlx(t_game *game)
 {
+	mlx_delete_image(game->mlx, game->scn.img);
 	mlx_close_window(game->mlx); // close the window
 	if (game->mlx)
 		mlx_terminate(game->mlx);

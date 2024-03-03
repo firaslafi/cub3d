@@ -21,6 +21,7 @@
 typedef struct s_map t_map;
 typedef struct s_game t_game;
 typedef struct s_pos t_pos;
+typedef struct s_parse t_parse;
 
 
 /*****************checking_format.c********************/

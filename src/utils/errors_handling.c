@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub_3d.h"
+#include "../include/utils.h"
 
 char	*error_table(char *code)
 {

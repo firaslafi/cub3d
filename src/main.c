@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: navid <navid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:16:02 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/02/21 05:29:25 by navid            ###   ########.fr       */
+/*   Updated: 2024/02/29 14:43:47 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,18 @@ void print_map_details(t_game *game)
 	}
 }
 
-bool	mlx_initiate(t_game	*game)
-{
-	game->mlx = mlx_init(MAX_WIDTH, MAX_HEIGHT, "cub3D", true);
-	if (!game->mlx)
-		return(error(game, "MLX is not initiated!!!", SYSERR), false);
-	return (true);
-}
+/*----------------------------------------------------------------------------*/
+
+
+/*----------------------------------------------------------------------------*/
 
 void	game_run(t_game *game)
 {
 	mlx_initiate(game);
+	// mlx_loop_hook(game->mlx, &game_loop, &game);	// game loop
+	// mlx_key_hook(game->mlx, &mlx_key, &game);	// key press and release
+	mini_map(game);
+	mlx_loop(game->mlx);
 }
 
 int	main(int ac, char **av)

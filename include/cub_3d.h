@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: navid <navid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:29:06 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/02/21 05:18:58 by navid            ###   ########.fr       */
+/*   Updated: 2024/03/02 14:40:33 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include "../libs/libft/fts.h"
 # include "../include/utils.h"
 # include "../include/parser.h"
+# include "../include/hud.h"
+# include "../include/raycast.h"
 
 # define BLUE		"\033[38;5;4m"
 # define GREEN		"\033[38;5;2m"  // For a bright green try 10 instead of 2
@@ -40,15 +42,24 @@
 # define SYSERR		0
 # define NOSYSERR	1
 // # define ONLY_CHECK	2
-# define WIDTH 256
-# define HEIGHT 256
+// # define WIDTH 256
+// # define HEIGHT 256
+#define MINIMAP_RADIUS 10
+#define MINIMAP_CENTER 130
 
+# define TILE_SIZE 30 // tile size
+# define FOV 60 // field of view
+# define ROTATION_SPEED 0.045 // rotation speed
+# define PLAYER_SPEED 4	// player speed
 
 typedef struct s_parse t_parse;
 
 
 # define MAX_WIDTH  1024
 # define MAX_HEIGHT 1024
+# define WIN_WIDTH  1024
+# define WIN_HEIGHT 720
+# define DOT_SIZE	10
 
 typedef struct s_map{
 	int			resolution_x;
@@ -85,14 +96,48 @@ typedef struct s_pos{
 
 typedef struct s_player{
 	t_pos		pos;
+	int		plyr_x; // player x position in pixels
+	int		plyr_y; // player y position in pixels
+	double	angle;	// player angle
+	float	fov_rd;	// field of view in radians
+	int		rot;	// rotation flag
+	int		l_r;	// left right flag
+	int		u_d;	// up down flag
 }		t_player;
 
+
+typedef struct s_scene{
+	mlx_image_t		*img;
+}	t_scene;
+
+typedef struct s_hud{
+	char			**map;
+	t_pos			pos;
+	mlx_image_t		*circle;
+	mlx_image_t		*circle_bck;
+	mlx_image_t		*img_ci_bck;
+	mlx_image_t		*img_ply;
+	mlx_texture_t	*w_dot;
+	mlx_texture_t	*b_dot;
+	mlx_image_t		*img_wall;
+	mlx_texture_t	*ply;
+}	t_hud;
+
+typedef struct s_ray	//the ray structure
+{
+	double	ray_ngl;	// ray angle
+	double	distance;	// distance to the wall
+	int		flag;		// flag for the wall
+}	t_ray;
 
 typedef struct s_game{
 	t_map		map;
 	t_parse		parser;
 	t_player	ply;
 	mlx_t		*mlx;
+	t_scene		scn;
+	t_hud		hud;
+	t_ray		ray;
 }		t_game;
 
 /////////////////////////////////////////////////////

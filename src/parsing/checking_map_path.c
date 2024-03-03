@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub_3d.h"
+#include "../include/parser.h"
 
 /*This func calls nowhere, just created to
 check the created sample map.*/

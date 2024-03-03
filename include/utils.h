@@ -12,7 +12,7 @@
 
 #ifndef UTILS_H
 # define UTILS_H
-// # include "../include/cub_3d.h"
+# include "../include/cub_3d.h"
 
 typedef struct s_game t_game;
 typedef struct s_parse t_parse;

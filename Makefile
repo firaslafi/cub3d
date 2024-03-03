@@ -11,7 +11,7 @@ RM			=	rm
 
 SRC_DIR		=	src
 BUILD_DIR	=	build
-SUB_DIRS	=	parsing utils
+SUB_DIRS	=	parsing utils hud raycast
 
 LIBFT_DIR	=	libs/libft
 MLX_DIR		=	libs/MLX42

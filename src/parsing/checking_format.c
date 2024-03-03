@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   checking_format.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: navid <navid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/02/21 07:18:00 by navid            ###   ########.fr       */
+/*   Updated: 2024/03/01 07:27:07 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub_3d.h"
+#include "../include/parser.h"
 
 size_t	array_length(char **array)
 {
@@ -191,12 +191,18 @@ int	calc_map_rows_widths(t_map *map)
 	return (0);
 }
 
-bool assessment_map(t_game *game)
+bool	remove_empty_outside_spaces()
+{
+	return (true);
+}
+
+bool	assessment_map(t_game *game)
 {
 	// printf("hight:%d, line[%d]:%s\n", m->map_height, m->map_height, m->grid[m->map_height]);
 	calc_map_rows_widths(&game->map);
 	check_map_char(game);
 	check_map_path(game);
+	remove_empty_outside_spaces();
 	
 	return (true);
 }
@@ -416,21 +422,6 @@ int	fetch_map_detail(t_game *game)
 	}
 	close(game->parser.fd);
 	return (EXIT_SUCCESS);
-}
-
-void	initiate_player(t_player *ply)
-{
-	ply->pos.x = 0;
-	ply->pos.y = 0;
-}
-
-void	initiate_game(t_game *game, char *file)
-{
-	// game->parser = (t_parse *)ft_calloc(1, sizeof(t_parse));
-	// game->map = (t_map *)ft_calloc(1, sizeof(t_map));
-	initiate_map(&game->map);
-	initiate_parser(&game->parser, game, file);
-	initiate_player(&game->ply);
 }
 
 int	parsing_map(t_game *game)

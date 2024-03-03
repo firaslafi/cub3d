@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:02:39 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/02/29 10:51:49 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:37:36 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_pos t_pos;
 
 /*****************raycast_main.c********************/
 void	game_loop(void *ml);	// game loop
-void mlx_key(mlx_key_data_t keydata, void *ml);	// key press
+void    mlx_key(mlx_key_data_t keydata, void *ml);	// key press
 
 
 #endif

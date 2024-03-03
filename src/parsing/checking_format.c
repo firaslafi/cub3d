@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/01 07:27:07 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:33:57 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int read_map(t_game *game)
 	map = game->parser.map;
 	if (!all_chr_present(game->parser.line, MAPCHRS))
 	{
-		return (error(game, "Map chars are incorrect!", NOSYSERR), 1);
+		return (finish(game, "Map chars are incorrect!", NOSYSERR), 1);
 	}
 	game->parser.map_part = true;
 	map->grid = ft_realloc_strings(map->grid, array_length(map->grid), \
@@ -162,7 +162,7 @@ int	check_map_char(t_game *game)
 		while (++j < game->map.widths[i])
 		{
 			if (ft_strchr("NEWS", game->map.grid[i][j]) && game->ply.pos.x != 0)
-				return (error(game, "Repeated player char!", NOSYSERR), 1);
+				return (finish(game, "Repeated player char!", NOSYSERR), 1);
 			if (ft_strchr("NEWS", game->map.grid[i][j]) && game->ply.pos.x == 0)
 				game->ply.pos = (t_pos){j, i};
 		}
@@ -215,25 +215,25 @@ bool assessment_element(t_game *game, int err)
 
 	map = &game->map;
 	if (!map->no_xpm || (fd = open(map->no_xpm, O_RDONLY)) < 0)
-		return (error(game, "NO_texture file add wrong", err), false);
+		return (finish(game, "NO_texture file add wrong", err), false);
 	if (!map->so_xpm || (fd = open(map->so_xpm, O_RDONLY) < 0))
-		return (error(game, "SO_texture file add wrong", err), false);
+		return (finish(game, "SO_texture file add wrong", err), false);
 	if (!map->ea_xpm || (fd = open(map->ea_xpm, O_RDONLY) < 0))
-		return (error(game, "EA_texture file add wrong", err), false);
+		return (finish(game, "EA_texture file add wrong", err), false);
 	if (!map->we_xpm || (fd = open(map->we_xpm, O_RDONLY) < 0))
-		return (error(game, "WE_texture file add wrong", err), false);
+		return (finish(game, "WE_texture file add wrong", err), false);
 	close(fd);
 	i = 0;
 	while (map->ceiling_color[i])
 	{
 		if (map->ceiling_color[i++] == -1)
-			return (error(game, "Ceiling color is wrong", err), false);
+			return (finish(game, "Ceiling color is wrong", err), false);
 	}
 	i = 0;
 	while (map->floor_color[i])
 	{
 		if (map->floor_color[i++] == -1)	
-			return (error(game, "Floor color is wrong", err), false);
+			return (finish(game, "Floor color is wrong", err), false);
 	}
 	return (true);
 }
@@ -335,7 +335,7 @@ int extract_rgb(t_parse *parser)
 	char	**rgb;
 
 	if (ft_strcountchr(parser->split[1], ',') > 2)
-		return (error(parser->game, "Wrong rgb format!!!", NOSYSERR));
+		return (finish(parser->game, "Wrong rgb format!!!", NOSYSERR));
 	rgb = ft_split(parser->split[1], ',');
 	// for (int  i =  0; rgb[i]; i++)
 	// 	printf("rgb[%d]:%s\n", i, rgb[i]);
@@ -416,7 +416,7 @@ int	fetch_map_detail(t_game *game)
 			read_element(&game->parser);
 		}
 		else if (line_is_empty(game->parser.line) && game->parser.map_part)
-			error(game, "Empty line during map reading!!!", NOSYSERR);
+			finish(game, "Empty line during map reading!!!", NOSYSERR);
 		if (game->parser.line)
 			free(game->parser.line);
 	}
@@ -441,29 +441,29 @@ int	check_map_file_format_add(t_game *game, char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (error(game, "Cub file address is wrong!", SYSERR));
+		return (finish(game, "Cub file address is wrong!", SYSERR));
 	close(fd);
 	str = ft_strdup(".cub\0");
 	i = (int)ft_strlen(file) - 4;
 	j = 0;
 	if (i < 0)
-		return (free(str), error(game, "Cub file format wrong!", NOSYSERR));
+		return (free(str), finish(game, "Cub file format wrong!", NOSYSERR));
 	while (file[i] != '\0' && str[j] != '\0')
 	{
 		if (file[i++] != str[j++])
-			return (free(str), error(game, "Cub file format wrong!", NOSYSERR));
+			return (free(str), finish(game, "Cub file format wrong!", NOSYSERR));
 	}
 	if (file[i] == '\0' && str[j] == '\0')
 		return (free(str), EXIT_SUCCESS);
 	else
-		return (free(str), error(game, "Cub file format wrong!", NOSYSERR)); 
+		return (free(str), finish(game, "Cub file format wrong!", NOSYSERR)); 
 }
 
 int	checking_map(int ac, char **av, t_game *game)
 {
 	initiate_game(game, av[1]);
 	if (ac != 2)
-		return (error(game, "Wrong input numbers!", NOSYSERR), EXIT_FAILURE);
+		return (finish(game, "Wrong input numbers!", NOSYSERR), EXIT_FAILURE);
 	if (check_map_file_format_add(game, av[1]))
 		return (EXIT_FAILURE);
 	if (parsing_map(game))

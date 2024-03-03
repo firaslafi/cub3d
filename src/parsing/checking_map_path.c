@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_map_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: navid <navid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 21:23:22 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/02/21 11:07:34 by navid            ###   ########.fr       */
+/*   Updated: 2024/03/03 18:32:35 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**creat_sample_gird(t_game *game)
 
 	grid = (char **) ft_calloc(game->map.map_height + 1, sizeof(char *));
 	if (!grid)
-		return (error(game, "Malloc error!!!", SYSERR), NULL);
+		return (finish(game, "Malloc error!!!", SYSERR), NULL);
 	i = -1;
 	while(game->map.grid[++i] != 0)
 		grid[i] = ft_strdup(game->map.grid[i]);
@@ -48,7 +48,7 @@ bool fill_grid(t_game *game, t_pos pos, char **grid)
 		(int)pos.x < 0 || pos.x >= game->map.widths[pos.y])
 	{
 		printf("hi p.xy:{%d, %d}\n", pos.x, pos.y);
-		return (error(game, "Wrong path in Map!!!", NOSYSERR));
+		return (finish(game, "Wrong path in Map!!!", NOSYSERR));
 	}
 	if (grid[pos.y][pos.x] == '1')
 		return true;
@@ -70,10 +70,10 @@ int check_map_path(t_game *game)
 	char **grid;
 
 	if (game->map.grid == NULL)
-		error(game, "No Map found!!!", NOSYSERR);
+		finish(game, "No Map found!!!", NOSYSERR);
 	grid = creat_sample_gird(game);
 	if (!fill_grid(game, game->ply.pos, grid))
-		return (free_array(grid), error(game, "Map has wrong path!!!", NOSYSERR));
+		return (free_array(grid), finish(game, "Map has wrong path!!!", NOSYSERR));
 	free_array(grid);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 22:28:33 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/02/19 17:14:32 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:32:35 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	close_game(t_game *game);
 /**************errors_handling.c***************/
 
 char    *error_table(char *code);
-int     error(t_game *game, char *error, int no);
+int     finish(t_game *game, char *msg, int no);
 
 #endif

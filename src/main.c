@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:16:02 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/02/29 14:43:47 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:12:11 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void print_map_details(t_game *game)
 void	game_run(t_game *game)
 {
 	mlx_initiate(game);
-	// mlx_loop_hook(game->mlx, &game_loop, &game);	// game loop
-	// mlx_key_hook(game->mlx, &mlx_key, &game);	// key press and release
 	mini_map(game);
+	mlx_key_hook(game->mlx, &mlx_key, game);
 	mlx_loop(game->mlx);
+	// mlx_focus(game->mlx);
 }
 
 int	main(int ac, char **av)

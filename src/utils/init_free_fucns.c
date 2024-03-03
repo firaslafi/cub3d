@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/03 05:22:02 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:32:35 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	initiate_parser(t_parse *parser, t_game *game, char *file)
 {
 	parser->fd = open(file, O_RDONLY);
 	if (parser->fd == -1)
-		error(game, "The cub file address is wrong.", SYSERR);
+		finish(game, "The cub file address is wrong.", SYSERR);
 	parser->line = NULL;
 	parser->split = NULL;
 	// parser->details_part = true;
@@ -78,6 +78,8 @@ void	initiate_game(t_game *game, char *file)
 	initiate_parser(&game->parser, game, file);
 	initiate_player(game);
 	initiate_hud(game);
+	game->scn.img = NULL;
+	game->mlx = NULL;
 }
 
 void	free_array(char **map)
@@ -113,11 +115,11 @@ void	free_map(t_map *map)
 	
 	if (map->no_xpm && map->no_xpm != NULL)
 		free(map->no_xpm);
-	if (map->so_xpm != NULL)
+	if (map->no_xpm && map->so_xpm != NULL)
 		free(map->so_xpm);
-	if (map->ea_xpm != NULL)
+	if (map->ea_xpm && map->ea_xpm != NULL)
 		free(map->ea_xpm);
-	if (map->we_xpm != NULL)
+	if (map->we_xpm && map->we_xpm != NULL)
 		free(map->we_xpm);
 	if (map->grid != NULL)
 		free_array(map->grid);
@@ -127,26 +129,46 @@ void	free_map(t_map *map)
 	// map = NULL;
 }
 
+void	free_image(mlx_t *mlx, mlx_image_t *image)
+{
+	if (image)
+		mlx_delete_image(mlx, image);
+	image = NULL;
+}
+
+void	free_texture(mlx_texture_t *texture)
+{
+	if (texture)
+		mlx_delete_texture(texture);
+	texture = NULL;
+}
+
 void	free_hud(t_game *game)
 {
-	mlx_delete_image(game->mlx, game->hud.circle); // delete the image
-	mlx_delete_image(game->mlx, game->hud.circle_bck); // delete the image
-	mlx_delete_image(game->mlx, game->hud.img_ci_bck); // delete the image
-	mlx_delete_image(game->mlx, game->hud.img_ply); // delete the image
-	mlx_delete_image(game->mlx, game->hud.img_wall); // delete the image
-	mlx_delete_texture(game->hud.w_dot);
-	mlx_delete_texture(game->hud.b_dot);
-	mlx_delete_texture(game->hud.ply);
-	if (game->hud.map)
-		free_array(game->hud.map);
+	if (game->mlx)
+	{
+		free_image(game->mlx, game->hud.circle); // delete the image
+		free_image(game->mlx, game->hud.circle_bck); // delete the image
+		free_image(game->mlx, game->hud.img_ci_bck); // delete the image
+		free_image(game->mlx, game->hud.img_ply); // delete the image
+		free_image(game->mlx, game->hud.img_wall); // delete the image
+	}
+	free_texture(game->hud.w_dot);
+	free_texture(game->hud.b_dot);
+	free_texture(game->hud.ply);
+	free_array(game->hud.map);
 }
 
 void	free_mlx(t_game *game)
 {
-	mlx_delete_image(game->mlx, game->scn.img);
-	mlx_close_window(game->mlx); // close the window
-	if (game->mlx)
+	if (game->mlx != NULL)
+	{
+		mlx_delete_image(game->mlx, game->scn.img);
+		mlx_close_window(game->mlx); // close the window
 		mlx_terminate(game->mlx);
+		// free(game->mlx);
+		// game->mlx = NULL;
+	}
 }
 
 void 	free_raycast(t_ray *ray)
@@ -156,13 +178,16 @@ void 	free_raycast(t_ray *ray)
 
 void	close_game(t_game *game)
 {
-	free_map(&game->map);
-	free_hud(game);
-	free_raycast(&game->ray);
-	free_mlx(game);
-	// if (game->parser != NULL)
-		// free(game->parser);
-	// game->parser = NULL;
-	// free(game);
-	game = NULL;
+	if (game != NULL)
+	{
+		free_map(&game->map);
+		free_hud(game);
+		free_raycast(&game->ray);
+		free_mlx(game);
+		// if (game->parser != NULL)
+			// free(game->parser);
+		// game->parser = NULL;
+		// free(game);
+		game = NULL;
+	}
 }

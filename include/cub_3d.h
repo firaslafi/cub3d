@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:29:06 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/03/03 05:20:22 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:22:49 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 # define SYSERR		0
 # define NOSYSERR	1
-// # define ONLY_CHECK	2
+# define MSG		2
 // # define WIDTH 256
 // # define HEIGHT 256
 #define MINIMAP_RADIUS 10
@@ -134,9 +134,9 @@ typedef struct s_game{
 	t_map		map;
 	t_parse		parser;
 	t_player	ply;
-	mlx_t		*mlx;
-	t_scene		scn;
 	t_hud		hud;
+	t_scene		scn;
+	mlx_t		*mlx;
 	t_ray		ray;
 }		t_game;
 

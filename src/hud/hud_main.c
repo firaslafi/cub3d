@@ -85,11 +85,7 @@ void fill_circle(t_game *game)
 			// If this point is inside the ci`cle, print it
 			if (x*x + y*y < MINIMAP_RADIUS * MINIMAP_RADIUS + 1 )
 				mlx_put_pixel(game->hud.circle_bck, MINIMAP_CENTER + x, MINIMAP_CENTER + y, 0x000FF); 
-			// else // If outside the circle, print space
-			// 	printf(" ");
-			// printf(" ");
 		}
-		// printf("\n");
 	}
 }
 
@@ -111,13 +107,13 @@ bool draw_minimap(t_game *game)
 			if (game->hud.map[i][j] == '1')
 			{
 				if (mlx_image_to_window(game->mlx, game->hud.img_wall, x + DOT_SIZE, y + DOT_SIZE) < 0)
-					return (error(game, "map draw error", NOSYSERR), false);
+					return (finish(game, "map draw error", NOSYSERR), false);
 			}
 			else if (game->hud.map[i][j] == 'N')
 			{
 				printf("plyer x:%d and y:%d\n", game->ply.pos.x, game->ply.pos.y);
 				if (mlx_image_to_window(game->mlx, game->hud.img_ply, x + DOT_SIZE, y + DOT_SIZE) < 0)
-					return (error(game, "map draw error", NOSYSERR), false);
+					return (finish(game, "map draw error", NOSYSERR), false);
 			}
 		}
 	}
@@ -186,7 +182,7 @@ void	move_map(t_game *game, int direction)
 	}
 }
 
-void	hud_move_hook(mlx_key_data_t keydata, void *param)
+void	mlx_key(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
 
@@ -204,8 +200,8 @@ void	hud_move_hook(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		// move_map(game, RIGHT);
 		move_player(game, RIGHT);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(game->mlx);
+	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		finish(game, "Project finished.", MSG);
 }
 
 
@@ -219,18 +215,16 @@ bool	mini_map(t_game	*game)
 	game->hud.ply = mlx_load_png("./texture/ply_8.png");
 	game->hud.img_ply = mlx_texture_to_image(game->mlx, game->hud.ply);
 	// if (!game->hud.w_dot)
-	// 	return (error(game,"texture of hud", NOSYSERR), false);
+	// 	return (finish(game,"texture of hud", NOSYSERR), false);
 	// game->hud.circle_bck = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
 	// if (!game->hud.circle_bck || mlx_image_to_window(game->mlx, game->hud.circle_bck, 0, 0) < 0)
-	// 	return (error(game, "MLX Windows failed!!!",NOSYSERR), false);
+	// 	return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
 	// fill_circle(game);
 	draw_minimap(game);
 	// game->hud.circle = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
 	// if (!game->hud.circle || mlx_image_to_window(game->mlx, game->hud.circle, 0, 0) < 0)
-	// 	return (error(game, "MLX Windows failed!!!",NOSYSERR), false);
+	// 	return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
 	// draw_circle(game);
-	mlx_key_hook(game->mlx, &hud_move_hook, game);
-
 	// mlx_put_pixel(game->scn.img, 100, 100, 0xFF0000FF);
 	return(true);
 }
@@ -239,10 +233,10 @@ bool	mlx_initiate(t_game	*game)
 {
 	game->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3D", true);
 	if (!game->mlx)
-		return(error(game, "MLX is not initiated!!!", NOSYSERR), false);
+		return(finish(game, "MLX is not initiated!!!", NOSYSERR), false);
 	game->scn.img = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height);
 	if (!game->scn.img || (mlx_image_to_window(game->mlx, game->scn.img, 0, 0) < 0))
-		return (error(game, "MLX Windows failed!!!",NOSYSERR), false);
+		return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
 	return (true);
 }
 	// mlx_put_pixel(game->scn.img, 100, 100, 0xFF0000FF);

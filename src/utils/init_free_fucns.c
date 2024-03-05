@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/03 18:32:35 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/05 00:05:41 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ void	initiate_player(t_game *game)
 {
 	game->ply.pos.x = 0;
 	game->ply.pos.y = 0;
-	game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
-	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
-	game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
-	game->ply.angle = M_PI; // player angle
-	//the rest of the variables are initialized to zero by calloc
+	// game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
+	// game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
+	// game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
+	// game->ply.angle = M_PI; // player angle
 }
 
 void	initiate_hud(t_game *game)

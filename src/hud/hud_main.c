@@ -168,16 +168,16 @@ void	move_map(t_game *game, int direction)
 			sample->instances[i++].y -= DOT_SIZE;
 		game->hud.pos.y++;
 	}
-	if (direction == LEFT && game->hud.map[game->hud.pos.y][game->hud.pos.x + 1] != '1')
-	{
-		while (i < sample->count)
-			sample->instances[i++].x += DOT_SIZE;
-		game->hud.pos.x++;
-	}
-	if (direction == RIGHT && game->hud.map[game->hud.pos.y][game->hud.pos.x - 1] != '1')
+	if (direction == RIGHT && game->hud.map[game->hud.pos.y][game->hud.pos.x + 1] != '1')
 	{
 		while (i < sample->count)
 			sample->instances[i++].x -= DOT_SIZE;
+		game->hud.pos.x++;
+	}
+	if (direction == LEFT && game->hud.map[game->hud.pos.y][game->hud.pos.x - 1] != '1')
+	{
+		while (i < sample->count)
+			sample->instances[i++].x += DOT_SIZE;
 		game->hud.pos.x--;
 	}
 }
@@ -189,21 +189,67 @@ void	mlx_key(mlx_key_data_t keydata, void *param)
 	game = param;
 	(void)keydata;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
-		move_player(game, DOWN);
-		// move_map(game, DOWN);
+		// move_player(game, DOWN);
+		move_map(game, DOWN);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
-		move_player(game, UP);
-		// move_map(game, UP);
+		// move_player(game, UP);
+		move_map(game, UP);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		// move_map(game, LEFT);
-		move_player(game, LEFT);
+		move_map(game, LEFT);
+		// move_player(game, LEFT);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		// move_map(game, RIGHT);
-		move_player(game, RIGHT);
+		move_map(game, RIGHT);
+		// move_player(game, RIGHT);
 	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
 		finish(game, "Project finished.", MSG);
 }
 
+void fill_map_circle(t_game *game)
+{
+    int radius = MINIMAP_RADIUS;
+    int player_x = game->hud.pos.x;
+    int player_y = game->hud.pos.y;
+    int dot_size = DOT_SIZE;
+    int window_width = game->mlx->width;
+    int window_height = game->mlx->height;
+
+    for (int dx = -radius; dx <= radius; dx++)
+    {
+        for (int dy = -radius; dy <= radius; dy++)
+        {
+            uint32_t x = player_x + dx;
+            uint32_t y = player_y + dy;
+
+            // Check if the point (x, y) is within the circle
+            if (dx*dx + dy*dy <= radius*radius)
+            {
+                // printf("x:%d y:%d dy:%d y-dy:%d\n", x, y, dy, game->map.widths[y]);// Check if the point is within the bounds of the map
+                if (x >= 0 && x < 29 && y >= 0 && y < game->map.map_height)
+                {
+                    // Calculate the screen coordinates for drawing
+                    int screen_x = (radius * dot_size) + (dx * dot_size) + 26;
+                    int screen_y = (radius * dot_size) + (dy * dot_size) + 26;
+
+                    // Check if the calculated screen coordinates are within the window bounds
+                    if (screen_x >= 0 && screen_x < window_width - DOT_SIZE && screen_y >= 0 && screen_y < window_height - DOT_SIZE)
+                    {
+                        // Check if the map element is a wall
+                        if (game->hud.map[y][x] == '1')
+                        {
+                            // Draw the wall image at the calculated screen coordinates
+                            mlx_image_to_window(game->mlx, game->hud.img_wall, screen_x, screen_y);
+                        }
+                        if (game->hud.map[y][x] == 'N')
+                        {
+                            // Draw the wall image at the calculated screen coordinates
+                            mlx_image_to_window(game->mlx, game->hud.img_ply, screen_x, screen_y);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 bool	mini_map(t_game	*game)
 {
@@ -219,12 +265,12 @@ bool	mini_map(t_game	*game)
 	// game->hud.circle_bck = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
 	// if (!game->hud.circle_bck || mlx_image_to_window(game->mlx, game->hud.circle_bck, 0, 0) < 0)
 	// 	return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
-	// fill_circle(game);
-	draw_minimap(game);
-	// game->hud.circle = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
-	// if (!game->hud.circle || mlx_image_to_window(game->mlx, game->hud.circle, 0, 0) < 0)
-	// 	return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
-	// draw_circle(game);
+	fill_map_circle(game);
+	// draw_minimap(game);
+	game->hud.circle = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
+	if (!game->hud.circle || mlx_image_to_window(game->mlx, game->hud.circle, 0, 0) < 0)
+		return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
+	draw_circle(game);
 	// mlx_put_pixel(game->scn.img, 100, 100, 0xFF0000FF);
 	return(true);
 }

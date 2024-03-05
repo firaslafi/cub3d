@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/03 18:33:57 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:34:53 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,8 +191,19 @@ int	calc_map_rows_widths(t_map *map)
 	return (0);
 }
 
-bool	remove_empty_outside_spaces()
+bool	remove_empty_outside_spaces(t_game *game)
 {
+	// int	i;
+	// int	j;
+
+	// i = -1;
+	// while (i < game->map.map_height)
+	// {
+	// 	j = -1;
+	// 	while (j <= game->map.widths[i])
+	// 	remove_
+	// }
+	(void)game;
 	return (true);
 }
 
@@ -202,7 +213,7 @@ bool	assessment_map(t_game *game)
 	calc_map_rows_widths(&game->map);
 	check_map_char(game);
 	check_map_path(game);
-	remove_empty_outside_spaces();
+	remove_empty_outside_spaces(game);
 	
 	return (true);
 }

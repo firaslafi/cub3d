@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:29:06 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/03/05 00:04:26 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/06 10:34:46 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_hud{
 	mlx_texture_t	*w_dot;
 	mlx_texture_t	*b_dot;
 	mlx_image_t		*img_wall;
+	int				ply_flag;
 }	t_hud;
 
 typedef struct s_ray	//the ray structure

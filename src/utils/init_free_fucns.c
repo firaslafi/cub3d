@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/05 00:05:41 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/06 10:35:11 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	initiate_hud(t_game *game)
 	game->hud.w_dot = NULL;
 	game->hud.b_dot = NULL;
 	game->hud.img_wall = NULL;
+	game->hud.ply_flag = 0;
 }
 
 void	initiate_game(t_game *game, char *file)

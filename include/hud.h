@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:02:29 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/03 18:06:45 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/06 06:10:06 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_pos t_pos;
 
 /*****************hud_main.c********************/
 bool    mini_map(t_game *game);
+void    fill_map_circle(t_game	*game);
 bool	mlx_initiate(t_game	*game);
 void    mlx_key(mlx_key_data_t keydata, void* param);
 #endif

@@ -1,6 +1,7 @@
 
 
 #include "../include/hud.h"
+void fill_map_circle(t_game *game);
 
 // void draw_circle(mlx_image_t	*img)
 // {
@@ -53,7 +54,7 @@
 // 	mlx_close_window(game->mlx);
 // }
 
-void draw_circle(t_game *game)
+void draw_circle(t_game *game, int offset)
 {
 	int	angle;
 
@@ -63,8 +64,8 @@ void draw_circle(t_game *game)
 		// Convert angle to radians
 		double radians = angle * M_PI / 180.0;
 		// Calculate (x, y) coordinates
-		int x = 65 + (int)((MINIMAP_RADIUS + 110) * cos(radians));
-		int y = 65 + (int)((MINIMAP_RADIUS + 110) * sin(radians));
+		int x = 65 + (int)((MINIMAP_RADIUS + offset) * cos(radians));
+		int y = 65 + (int)((MINIMAP_RADIUS + offset) * sin(radians));
 		// Print the point (x, y)
 		mlx_put_pixel(game->hud.circle, 65 + x, 65 + y, 0xFF0000FF); // Draw points in all octants
 	}
@@ -72,7 +73,7 @@ void draw_circle(t_game *game)
 
 void fill_circle(t_game *game)
 {
-	int N = 2* MINIMAP_RADIUS +1;
+	int N = 2* MINIMAP_RADIUS + 130;
 	int x, y;  // Coordinates inside the rectangle
 	// Draw a square of size N*N.
 	for (int i = 0; i < N; i++)
@@ -83,7 +84,7 @@ void fill_circle(t_game *game)
 			x = i- MINIMAP_RADIUS;
 			y = j- MINIMAP_RADIUS;
 			// If this point is inside the ci`cle, print it
-			if (x*x + y*y < MINIMAP_RADIUS * MINIMAP_RADIUS + 1 )
+			if (x*x + y*y < MINIMAP_RADIUS * MINIMAP_RADIUS + 110)
 				mlx_put_pixel(game->hud.circle_bck, MINIMAP_CENTER + x, MINIMAP_CENTER + y, 0x000FF); 
 		}
 	}
@@ -148,6 +149,15 @@ void	move_player(t_game *game, int direction)
 	}
 }
 
+void	clear_instnace(mlx_image_t *sample, int state)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < sample->count)
+		sample->instances[i++].enabled = state;
+}
+
 void	move_map(t_game *game, int direction)
 {
 	size_t	i;
@@ -156,30 +166,36 @@ void	move_map(t_game *game, int direction)
 	i = 0;
 	sample = game->hud.img_wall;
 	printf("pos y:%d pos x:%d\n",game->hud.pos.y, game->hud.pos.x);
+		clear_instnace(sample, false);
 	if (direction == UP && game->hud.map[game->hud.pos.y - 1][game->hud.pos.x] != '1')
 	{
-		while (i < sample->count)
-			sample->instances[i++].y += DOT_SIZE;
+		// while (i < sample->count)
+		// {
+		// 	sample->instances[i++].y += DOT_SIZE;
+		// }
 		game->hud.pos.y--;
+		// clear_instnace(sample, true);
+			// sample->instances->enabled = true;
 	}
 	if (direction == DOWN && game->hud.map[game->hud.pos.y + 1][game->hud.pos.x] != '1')
 	{
-		while (i < sample->count)
-			sample->instances[i++].y -= DOT_SIZE;
+		// while (i < sample->count)
+		// 	sample->instances[i++].y -= DOT_SIZE;
 		game->hud.pos.y++;
 	}
 	if (direction == RIGHT && game->hud.map[game->hud.pos.y][game->hud.pos.x + 1] != '1')
 	{
-		while (i < sample->count)
-			sample->instances[i++].x -= DOT_SIZE;
+		// while (i < sample->count)
+		// 	sample->instances[i++].x -= DOT_SIZE;
 		game->hud.pos.x++;
 	}
 	if (direction == LEFT && game->hud.map[game->hud.pos.y][game->hud.pos.x - 1] != '1')
 	{
-		while (i < sample->count)
-			sample->instances[i++].x += DOT_SIZE;
+		// while (i < sample->count)
+		// 	sample->instances[i++].x += DOT_SIZE;
 		game->hud.pos.x--;
 	}
+	fill_map_circle(game);
 }
 
 void	mlx_key(mlx_key_data_t keydata, void *param)
@@ -221,56 +237,101 @@ void fill_map_circle(t_game *game)
             uint32_t y = player_y + dy;
 
             // Check if the point (x, y) is within the circle
-            if (dx*dx + dy*dy <= radius*radius)
+            if (dx*dx + dy*dy <= (radius*radius) + 26)
             {
-                // printf("x:%d y:%d dy:%d y-dy:%d\n", x, y, dy, game->map.widths[y]);// Check if the point is within the bounds of the map
-                if (x >= 0 && x < 29 && y >= 0 && y < game->map.map_height)
+                printf("ply x:%d ply y:%d witdth:%d dx:%d dy:%d\n", game->hud.pos.x, game->hud.pos.y, game->map.widths[game->hud.pos.y], dx, dy);// Check if the point is within the bounds of the map
+                if (x >= 0 && x < game->map.widths[game->hud.pos.y] && y >= 0 && y < game->map.map_height)
                 {
                     // Calculate the screen coordinates for drawing
                     int screen_x = (radius * dot_size) + (dx * dot_size) + 26;
-                    int screen_y = (radius * dot_size) + (dy * dot_size) + 26;
+					int screen_y = (radius * dot_size) + (dy * dot_size) + 26;
+                    // int screen_x = (window_width / 2) - (radius * dot_size) + (dx * dot_size);
+                    // int screen_y = (window_height / 2) - (radius * dot_size) + (dy * dot_size);
 
                     // Check if the calculated screen coordinates are within the window bounds
-                    if (screen_x >= 0 && screen_x < window_width - DOT_SIZE && screen_y >= 0 && screen_y < window_height - DOT_SIZE)
+                    if (screen_x >= 0 && screen_x < window_width && screen_y >= 0 && screen_y < window_height)
                     {
                         // Check if the map element is a wall
-                        if (game->hud.map[y][x] == '1')
+                        if (x <= game->map.widths[game->hud.pos.y] && game->hud.map[y][x] == '1')
                         {
-                            // Draw the wall image at the calculated screen coordinates
+							// game->hud.img_wall->instances->enabled = true;
+							// Draw the wall image at the calculated screen coordinates
+							printf("hi\n");
                             mlx_image_to_window(game->mlx, game->hud.img_wall, screen_x, screen_y);
                         }
-                        if (game->hud.map[y][x] == 'N')
+                        if (game->hud.map[y][x] == 'N' && !game->hud.ply_flag)
                         {
+							clear_instnace(game->hud.img_ply, false);
+							game->hud.ply_flag = 1;
                             // Draw the wall image at the calculated screen coordinates
+							// clear_instnace(game->hud.img_ply, false);
                             mlx_image_to_window(game->mlx, game->hud.img_ply, screen_x, screen_y);
+
                         }
                     }
                 }
             }
+        } 
+    }
+}
+
+void pad_lines(char **map, uint32_t map_height, uint32_t longest_line, uint32_t *line_lengths) {
+    // Iterate over each line of the map
+    for (size_t i = 0; i < map_height; i++) {
+        size_t current_length = line_lengths[i];
+
+        // Calculate the number of spaces needed to pad the line
+        size_t spaces_needed = longest_line - current_length;
+
+        // Allocate memory for the new padded line
+        char *padded_line = malloc((current_length + spaces_needed + 1) * sizeof(char));
+
+        // Copy the original line to the padded line
+        strcpy(padded_line, map[i]);
+
+        // Append spaces to the padded line
+        for (size_t j = current_length; j < current_length + spaces_needed; j++) {
+            padded_line[j] = ' ';
         }
+
+        // Add null terminator
+        padded_line[current_length + spaces_needed] = '\0';
+
+        // Free the original line
+        free(map[i]);
+
+        // Assign the padded line to the map
+        map[i] = padded_line;
+
+        // Update the line length
+        line_lengths[i] = longest_line;
     }
 }
 
 bool	mini_map(t_game	*game)
 {
 	game->hud.map = creat_sample_gird(game);
+	pad_lines(game->hud.map, game->map.map_height, game->map.max_width, game->map.widths);
+	for(uint32_t i = 0; i < game->map.map_height; i++)
+		printf(GREEN"line[%d]: length:[%zu]"RESET RED"	|%s|\n"RESET, i, ft_strlen(game->hud.map[i]), game->hud.map[i]);
 	game->hud.pos = game->ply.pos;
 	game->hud.b_dot = mlx_load_png("./texture/black_8.png");
 	game->hud.w_dot = mlx_load_png("./texture/white_8.png");
 	game->hud.img_wall = mlx_texture_to_image(game->mlx, game->hud.w_dot);
 	game->hud.ply = mlx_load_png("./texture/ply_8.png");
 	game->hud.img_ply = mlx_texture_to_image(game->mlx, game->hud.ply);
-	// if (!game->hud.w_dot)
-	// 	return (finish(game,"texture of hud", NOSYSERR), false);
-	// game->hud.circle_bck = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
-	// if (!game->hud.circle_bck || mlx_image_to_window(game->mlx, game->hud.circle_bck, 0, 0) < 0)
-	// 	return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
+	game->hud.circle_bck = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
+	if (!game->hud.circle_bck || mlx_image_to_window(game->mlx, game->hud.circle_bck, 0, 0) < 0)
+		return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
+	// fill_circle(game);
 	fill_map_circle(game);
 	// draw_minimap(game);
 	game->hud.circle = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
 	if (!game->hud.circle || mlx_image_to_window(game->mlx, game->hud.circle, 0, 0) < 0)
 		return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
-	draw_circle(game);
+	draw_circle(game, 110);
+	// draw_circle(game, 109);
+	// draw_circle(game, 111);
 	// mlx_put_pixel(game->scn.img, 100, 100, 0xFF0000FF);
 	return(true);
 }

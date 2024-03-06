@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:16:02 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/03 18:12:11 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/06 08:31:23 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,26 @@ void print_map_details(t_game *game)
 			// printf(GREEN"%s\n"RESET, game->map.grid[i]);
 			printf(GREEN"line[%d]: length:[%d]"RESET ORG"	|%s|\n", i, game->map.widths[i], game->map.grid[i]);
 	printf("longest line is: "RESET RED"%d\n"RESET, game->map.max_width);
+	printf(ORG"Player pos: x: "RESET RED"%d"RESET ORG" y: " RESET RED"%d\n"RESET, game->ply.pos.x, game->ply.pos.y);
 	}
 }
 
 /*----------------------------------------------------------------------------*/
 
+void	loop_hocks(void *param)
+{
+	t_game	*game;
 
+	game = param;
+	// fill_map_circle(game);
+}
 /*----------------------------------------------------------------------------*/
 
 void	game_run(t_game *game)
 {
 	mlx_initiate(game);
 	mini_map(game);
+	mlx_loop_hook(game->mlx, &loop_hocks, game);
 	mlx_key_hook(game->mlx, &mlx_key, game);
 	mlx_loop(game->mlx);
 	// mlx_focus(game->mlx);

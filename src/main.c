@@ -42,20 +42,20 @@ void print_map_details(t_game *game)
 
 /*----------------------------------------------------------------------------*/
 
-void	loop_hocks(void *param)
-{
-	t_game	*game;
+// void	loop_hocks(void *param)
+// {
+// 	t_game	*game;
 
-	game = param;
-	// fill_map_circle(game);
-}
+// 	game = param;
+// 	// fill_map_circle(game);
+// }
 /*----------------------------------------------------------------------------*/
 
 void	game_run(t_game *game)
 {
 	mlx_initiate(game);
 	mini_map(game);
-	mlx_loop_hook(game->mlx, &loop_hocks, game);
+	// mlx_loop_hook(game->mlx, &loop_hocks, game);
 	mlx_key_hook(game->mlx, &mlx_key, game);
 	mlx_loop(game->mlx);
 	// mlx_focus(game->mlx);

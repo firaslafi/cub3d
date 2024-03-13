@@ -112,7 +112,7 @@ bool draw_minimap(t_game *game)
 			}
 			else if (game->hud.map[i][j] == 'N')
 			{
-				printf("plyer x:%d and y:%d\n", game->ply.pos.x, game->ply.pos.y);
+				//printf("plyer x:%d and y:%d\n", game->ply.pos.x, game->ply.pos.y);
 				if (mlx_image_to_window(game->mlx, game->hud.img_ply, x + DOT_SIZE, y + DOT_SIZE) < 0)
 					return (finish(game, "map draw error", NOSYSERR), false);
 			}
@@ -160,12 +160,12 @@ void	clear_instnace(mlx_image_t *sample, int state)
 
 void	move_map(t_game *game, int direction)
 {
-	size_t	i;
+	// size_t	i;
 	mlx_image_t	*sample;
 
-	i = 0;
+	// i = 0;
 	sample = game->hud.img_wall;
-	printf("pos y:%d pos x:%d\n",game->hud.pos.y, game->hud.pos.x);
+	// printf("pos y:%d pos x:%d\n",game->hud.pos.y, game->hud.pos.x);
 		clear_instnace(sample, false);
 	if (direction == UP && game->hud.map[game->hud.pos.y - 1][game->hud.pos.x] != '1')
 	{
@@ -239,8 +239,8 @@ void fill_map_circle(t_game *game)
             // Check if the point (x, y) is within the circle
             if (dx*dx + dy*dy <= (radius*radius) + 26)
             {
-                printf("ply x:%d ply y:%d witdth:%d dx:%d dy:%d\n", game->hud.pos.x, game->hud.pos.y, game->map.widths[game->hud.pos.y], dx, dy);// Check if the point is within the bounds of the map
-                if (x >= 0 && x < game->map.widths[game->hud.pos.y] && y >= 0 && y < game->map.map_height)
+                // printf("ply x:%d ply y:%d witdth:%d dx:%d dy:%d\n", game->hud.pos.x, game->hud.pos.y, game->map.widths[game->hud.pos.y], dx, dy);// Check if the point is within the bounds of the map
+                if (x < game->map.widths[game->hud.pos.y] && y < game->map.map_height)
                 {
                     // Calculate the screen coordinates for drawing
                     int screen_x = (radius * dot_size) + (dx * dot_size) + 26;
@@ -256,7 +256,7 @@ void fill_map_circle(t_game *game)
                         {
 							// game->hud.img_wall->instances->enabled = true;
 							// Draw the wall image at the calculated screen coordinates
-							printf("hi\n");
+							// printf("hi\n");
                             mlx_image_to_window(game->mlx, game->hud.img_wall, screen_x, screen_y);
                         }
                         if (game->hud.map[y][x] == 'N' && !game->hud.ply_flag)

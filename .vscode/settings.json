@@ -6,6 +6,9 @@
         "atomic": "cpp",
         "memory": "cpp",
         "utility": "cpp",
-        "algorithm": "c"
+        "algorithm": "c",
+        "hud.h": "c",
+        "raycast.h": "c",
+        "stdio.h": "c"
     }
 }

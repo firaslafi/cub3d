@@ -49,10 +49,25 @@ void	initiate_player(t_game *game)
 {
 	game->ply.pos.x = 0;
 	game->ply.pos.y = 0;
-	// game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
-	// game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
-	// game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
-	// game->ply.angle = M_PI; // player angle
+	game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
+	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
+	game->ply.angle = M_PI; // player angle
+	game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
+	game->ply.rot = 0;
+	game->ply.l_r = 0;
+	game->ply.u_d = 0;
+}
+
+void	initiate_ray(t_game *game)
+{
+	game->ray.index = 0;
+	game->ray.ray_ngl = 0;
+	game->ray.horiz_x = 0;
+	game->ray.horiz_y = 0;
+	game->ray.vert_x = 0;
+	game->ray.vert_y = 0;
+	game->ray.distance = 0;
+	game->ray.flag = 0;
 }
 
 void	initiate_hud(t_game *game)
@@ -77,8 +92,9 @@ void	initiate_game(t_game *game, char *file)
 	initiate_map(&game->map);
 	initiate_parser(&game->parser, game, file);
 	initiate_player(game);
+	initiate_ray(game);
 	initiate_hud(game);
-	game->scn.img = NULL;
+	game->scn.img = 0;
 	game->mlx = NULL;
 }
 

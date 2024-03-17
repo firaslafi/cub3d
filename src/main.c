@@ -50,11 +50,12 @@ void print_map_details(t_game *game)
 // 	// fill_map_circle(game);
 // }
 /*----------------------------------------------------------------------------*/
-
 void	game_run(t_game *game)
 {
-	mlx_initiate(game);
-	mini_map(game);
+	// mlx_initiate(game);
+	start_the_game(game);	// start the game
+
+	// mini_map(game);
 	// mlx_loop_hook(game->mlx, &loop_hocks, game);
 	mlx_key_hook(game->mlx, &mlx_key, game);
 	mlx_loop(game->mlx);

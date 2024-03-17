@@ -10,44 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./MLX42/include/MLX42/MLX42.h"
-#include "./libs/libft/libft.h"
-#include "./main.h"
+#include "./libs/MLX42/include/MLX42/MLX42.h"
+#include "./libs/libft/libft/libft.h"
+// #include "./main.h"
 #include <fcntl.h>
 #include <stdio.h>
-
+#include "./include/cub_3d.h"
 # include <string.h>
 
 
 # define S_W 1900 // screen width
 # define S_H 1000 // screen height
-# define TILE_SIZE 40 // tile size
-# define FOV 60 // field of view
-# define ROTATION_SPEED 0.03 // rotation speed
-# define PLAYER_SPEED 3	// player speed
+// # define TILE_SIZE 40 // tile size
+// # define FOV 60 // field of view
+// # define ROTATION_SPEED 0.03 // rotation speed
+// # define PLAYER_SPEED 3	// player speed
 
-typedef struct s_player //the player structure
-{
-	int		plyr_x; // player x position in pixels
-	int		plyr_y; // player y position in pixels
-	double	angle;	// player angle
-	float	fov_rd;	// field of view in radians
-	int		rot;	// rotation flag
-	int		l_r;	// left right flag
-	int		u_d;	// up down flag
-}	t_player;
+// typedef struct s_player //the player structure
+// {
+// 	int		plyr_x; // player x position in pixels
+// 	int		plyr_y; // player y position in pixels
+// 	double	angle;	// player angle
+// 	float	fov_rd;	// field of view in radians
+// 	int		rot;	// rotation flag
+// 	int		l_r;	// left right flag
+// 	int		u_d;	// up down flag
+// }	t_player;
 
-typedef struct s_ray
-{
-	int		index;
-	double	ray_ngl;
-	double	horiz_x;
-	double	horiz_y;
-	double	vert_x;
-	double	vert_y;
-	double	distance;
-	int		flag;
-}	t_ray;
+// typedef struct s_ray
+// {
+// 	int		index;
+// 	double	ray_ngl;
+// 	double	horiz_x;
+// 	double	horiz_y;
+// 	double	vert_x;
+// 	double	vert_y;
+// 	double	distance;
+// 	int		flag;
+// }	t_ray;
 
 
 typedef struct s_tex
@@ -274,9 +274,6 @@ float nor_angle(float angle) {
     return angle;
 }
 
-
-
-
 void	draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix)	// draw the floor and the ceiling
 {
 	int		i;
@@ -288,14 +285,11 @@ void	draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix)	// draw the f
 	while (i < t_pix)
 		my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // ceiling
 }
-
-
     
 mlx_texture_t *get_west_wall_color(t_mlx *mlx) 
 {
     return mlx->texture->no; // Color for the west wall
 }
-
 
 mlx_texture_t *get_east_wall_color(t_mlx *mlx) {
     return mlx->texture->no; // Color for the east wall
@@ -620,3 +614,6 @@ int main()	// main function
 	start_the_game(data);	// start the game
 	return 0;
 }
+
+
+//gcc raycast.c ./libs/MLX42/build/libmlx42.a ./libs/libft/libft.a -Iinclude -ldl -lglfw -pthread -lm -fsanitize=address -o navid

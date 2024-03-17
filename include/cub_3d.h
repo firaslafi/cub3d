@@ -47,19 +47,27 @@
 #define MINIMAP_RADIUS 10
 #define MINIMAP_CENTER 130
 
-# define TILE_SIZE 30 // tile size
+# define TILE_SIZE 40 // tile size
 # define FOV 60 // field of view
-# define ROTATION_SPEED 0.045 // rotation speed
-# define PLAYER_SPEED 4	// player speed
+# define ROTATION_SPEED 0.07 // rotation speed
+# define PLAYER_SPEED 5	// player speed
 
 typedef struct s_parse t_parse;
 
 
-# define MAX_WIDTH  1024
-# define MAX_HEIGHT 1024
-# define WIN_WIDTH  1024
-# define WIN_HEIGHT 720
+// # define MAX_WIDTH  1024
+// # define MAX_HEIGHT 1024
+# define WIN_WIDTH  1900
+# define WIN_HEIGHT 1000
 # define DOT_SIZE	10
+
+// typedef struct s_tex
+// {
+// 	mlx_texture_t	*no;
+// 	mlx_texture_t	*so;
+// 	mlx_texture_t	*we;
+// 	mlx_texture_t	*ea;
+// }	t_tex;
 
 typedef struct s_map{
 	int			resolution_x;
@@ -76,6 +84,7 @@ typedef struct s_map{
 	uint32_t	map_height;
 	uint32_t	max_width;
 	uint32_t	*widths;
+
 }		t_map;
 
 typedef struct s_parse{
@@ -126,7 +135,12 @@ typedef struct s_hud{
 
 typedef struct s_ray	//the ray structure
 {
-	double	ray_ngl;	// ray angle
+	int		index;
+	double	ray_ngl;
+	double	horiz_x;
+	double	horiz_y;
+	double	vert_x;
+	double	vert_y;
 	double	distance;	// distance to the wall
 	int		flag;		// flag for the wall
 }	t_ray;
@@ -135,10 +149,11 @@ typedef struct s_game{
 	t_map		map;
 	t_parse		parser;
 	t_player	ply;
+	t_ray		ray;
 	t_hud		hud;
 	t_scene		scn;
 	mlx_t		*mlx;
-	t_ray		ray;
+
 }		t_game;
 
 /////////////////////////////////////////////////////

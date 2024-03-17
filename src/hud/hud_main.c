@@ -121,33 +121,33 @@ bool draw_minimap(t_game *game)
 	return (true);
 }
 
-void	move_player(t_game *game, int direction)
-{
-	t_hud	*sample;
+// void	move_player(t_game *game, int direction)
+// {
+// 	t_hud	*sample;
 
-	sample = &game->hud;
-	// printf("pos y:%d pos x:%d\n",sample->pos.y, sample->pos.x);
-	if (direction == UP && sample->map[sample->pos.y - 1][sample->pos.x] != '1')
-	{
-		sample->img_ply->instances[0].y -= DOT_SIZE;
-		sample->pos.y--;
-	}
-	if (direction == DOWN && sample->map[sample->pos.y + 1][sample->pos.x] != '1')
-	{
-		sample->img_ply->instances[0].y += DOT_SIZE;
-		sample->pos.y++;
-	}
-	if (direction == LEFT && sample->map[sample->pos.y][sample->pos.x - 1] != '1')
-	{
-		sample->img_ply->instances[0].x -= DOT_SIZE;
-		sample->pos.x--;
-	}
-	if (direction == RIGHT && sample->map[sample->pos.y][sample->pos.x + 1] != '1')
-	{
-		sample->img_ply->instances[0].x += DOT_SIZE;
-		sample->pos.x++;
-	}
-}
+// 	sample = &game->hud;
+// 	// printf("pos y:%d pos x:%d\n",sample->pos.y, sample->pos.x);
+// 	if (direction == UP && sample->map[sample->pos.y - 1][sample->pos.x] != '1')
+// 	{
+// 		sample->img_ply->instances[0].y -= DOT_SIZE;
+// 		sample->pos.y--;
+// 	}
+// 	if (direction == DOWN && sample->map[sample->pos.y + 1][sample->pos.x] != '1')
+// 	{
+// 		sample->img_ply->instances[0].y += DOT_SIZE;
+// 		sample->pos.y++;
+// 	}
+// 	if (direction == LEFT && sample->map[sample->pos.y][sample->pos.x - 1] != '1')
+// 	{
+// 		sample->img_ply->instances[0].x -= DOT_SIZE;
+// 		sample->pos.x--;
+// 	}
+// 	if (direction == RIGHT && sample->map[sample->pos.y][sample->pos.x + 1] != '1')
+// 	{
+// 		sample->img_ply->instances[0].x += DOT_SIZE;
+// 		sample->pos.x++;
+// 	}
+// }
 
 void	clear_instnace(mlx_image_t *sample, int state)
 {
@@ -198,27 +198,27 @@ void	move_map(t_game *game, int direction)
 	fill_map_circle(game);
 }
 
-void	mlx_key(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
+// void	mlx_key(mlx_key_data_t keydata, void *param)
+// {
+// 	t_game	*game;
 
-	game = param;
-	(void)keydata;
-	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
-		// move_player(game, DOWN);
-		move_map(game, DOWN);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
-		// move_player(game, UP);
-		move_map(game, UP);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		move_map(game, LEFT);
-		// move_player(game, LEFT);
-	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		move_map(game, RIGHT);
-		// move_player(game, RIGHT);
-	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		finish(game, "Project finished.", MSG);
-}
+// 	game = param;
+// 	(void)keydata;
+// 	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
+// 		// move_player(game, DOWN);
+// 		move_map(game, DOWN);
+// 	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
+// 		// move_player(game, UP);
+// 		move_map(game, UP);
+// 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+// 		move_map(game, LEFT);
+// 		// move_player(game, LEFT);
+// 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+// 		move_map(game, RIGHT);
+// 		// move_player(game, RIGHT);
+// 	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+// 		finish(game, "Project finished.", MSG);
+// }
 
 void fill_map_circle(t_game *game)
 {
@@ -336,14 +336,15 @@ bool	mini_map(t_game	*game)
 	return(true);
 }
 
-bool	mlx_initiate(t_game	*game)
-{
-	game->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3D", true);
-	if (!game->mlx)
-		return(finish(game, "MLX is not initiated!!!", NOSYSERR), false);
-	game->scn.img = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height);
-	if (!game->scn.img || (mlx_image_to_window(game->mlx, game->scn.img, 0, 0) < 0))
-		return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
-	return (true);
-}
+// bool	mlx_initiate(t_game	*game)
+// {
+	// game->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3D", true);
+	// if (!game->mlx)
+	// 	return(finish(game, "MLX is not initiated!!!", NOSYSERR), false);
+	// game->scn.img = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height);
+	// // if (!game->scn.img || (mlx_image_to_window(game->mlx, game->scn.img, 0, 0) < 0))
+	// if (!game->scn.img)
+	// 	return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
+// 	return (true);
+// }
 	// mlx_put_pixel(game->scn.img, 100, 100, 0xFF0000FF);

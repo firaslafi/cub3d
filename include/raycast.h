@@ -21,8 +21,7 @@ typedef struct s_pos t_pos;
 
 
 /*****************raycast_main.c********************/
-void	game_loop(void *ml);	// game loop
-void    mlx_key(mlx_key_data_t keydata, void *ml);	// key press
+void	start_the_game(t_game *game);	// start the game
 
 
 #endif

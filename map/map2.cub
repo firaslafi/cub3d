@@ -1,9 +1,9 @@
 
 
 
-NO 				            ./texture/north_texture.xpm
+NO 				            ./texture/stone_wall.png
 			
-			SO ./texture/south_texture.xpm  		
+			SO ./texture/wolf.png  		
 
 	
 		EA   	  ./texture/east_texture.xpm 		    

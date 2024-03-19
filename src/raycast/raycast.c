@@ -536,6 +536,7 @@ void	cast_rays(t_game *game)	// cast the rays
 			game->ray.distance = h_inter; // get the distance
 			game->ray.flag = 1; // flag for the wall
 		}
+
 		render_wall(game, ray); // render the wall
 		ray++; // next ray
 		game->ray.ray_ngl += (game->ply.fov_rd / S_W); // next angle

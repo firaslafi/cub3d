@@ -164,7 +164,7 @@ int	check_map_char(t_game *game)
 			if (ft_strchr("NEWS", game->map.grid[i][j]) && game->ply.pos.x != 0)
 				return (finish(game, "Repeated player char!", NOSYSERR), 1);
 			if (ft_strchr("NEWS", game->map.grid[i][j]) && game->ply.pos.x == 0)
-				game->ply.pos = (t_pos){j, i};
+				game->ply.pos = (t_pos){j, i + 1};
 		}
 	}
 	return (0);

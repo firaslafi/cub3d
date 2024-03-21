@@ -128,17 +128,34 @@ int read_map(t_game *game)
 	map->grid[++map->map_height] = NULL;
 	return (0);
 }
+bool	check_texture_file_path(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd > 0)
+	{
+		close(fd);
+		return (true);
+	}
+	close(fd);
+	return (false);
+}
+// (fd = open(map->no_xpm, O_RDONLY)) > 0)
+// (fd = open(map->so_xpm, O_RDONLY)) > 0)
+// (fd = open(map->ea_xpm, O_RDONLY)) > 0)
+// (fd = open(map->we_xpm, O_RDONLY)) > 0)
 
 bool check_element(t_parse *parser)
 {
-	int		fd;
+	// int		fd;
 	t_map	*map;
 	
 	map = parser->map;
-	if ((map->no_xpm && (fd = open(map->no_xpm, O_RDONLY)) > 0) &&
-		(map->so_xpm && (fd = open(map->so_xpm, O_RDONLY)) > 0) &&
-		(map->ea_xpm && (fd = open(map->ea_xpm, O_RDONLY)) > 0) &&
-		(map->we_xpm && (fd = open(map->we_xpm, O_RDONLY)) > 0) &&
+	if ((map->no_xpm && check_texture_file_path(map->no_xpm)) &&
+		(map->so_xpm && check_texture_file_path(map->so_xpm)) &&
+		(map->ea_xpm && check_texture_file_path(map->ea_xpm)) &&
+		(map->we_xpm && check_texture_file_path(map->we_xpm)) &&
 		((map->ceiling_color[0] != -1) && (map->ceiling_color[1] != -1) &&
 		(map->ceiling_color[02] != -1)) && ((map->floor_color[0] != -1) &&
 		(map->floor_color[1] != -1) && (map->floor_color[2] != -1)))
@@ -191,21 +208,6 @@ int	calc_map_rows_widths(t_map *map)
 	return (0);
 }
 
-bool	remove_empty_outside_spaces(t_game *game)
-{
-	// int	i;
-	// int	j;
-
-	// i = -1;
-	// while (i < game->map.map_height)
-	// {
-	// 	j = -1;
-	// 	while (j <= game->map.widths[i])
-	// 	remove_
-	// }
-	(void)game;
-	return (true);
-}
 
 bool	assessment_map(t_game *game)
 {
@@ -213,27 +215,28 @@ bool	assessment_map(t_game *game)
 	calc_map_rows_widths(&game->map);
 	check_map_char(game);
 	check_map_path(game);
-	remove_empty_outside_spaces(game);
-	
 	return (true);
 }
 
+// (fd = open(map->no_xpm, O_RDONLY) < 0
+// (fd = open(map->so_xpm, O_RDONLY) < 0)
+// (fd = open(map->ea_xpm, O_RDONLY) < 0)
+// (fd = open(map->we_xpm, O_RDONLY) < 0)
+
 bool assessment_element(t_game *game, int err)
 {
-	int		fd;
 	int		i;
 	t_map	*map;
 
 	map = &game->map;
-	if (!map->no_xpm || (fd = open(map->no_xpm, O_RDONLY)) < 0)
+	if (!map->no_xpm || !check_texture_file_path(map->no_xpm))
 		return (finish(game, "NO_texture file add wrong", err), false);
-	if (!map->so_xpm || (fd = open(map->so_xpm, O_RDONLY) < 0))
+	if (!map->so_xpm || !check_texture_file_path(map->so_xpm))
 		return (finish(game, "SO_texture file add wrong", err), false);
-	if (!map->ea_xpm || (fd = open(map->ea_xpm, O_RDONLY) < 0))
+	if (!map->ea_xpm || !check_texture_file_path(map->ea_xpm))
 		return (finish(game, "EA_texture file add wrong", err), false);
-	if (!map->we_xpm || (fd = open(map->we_xpm, O_RDONLY) < 0))
+	if (!map->we_xpm || !check_texture_file_path(map->we_xpm))
 		return (finish(game, "WE_texture file add wrong", err), false);
-	close(fd);
 	i = 0;
 	while (map->ceiling_color[i])
 	{
@@ -435,11 +438,26 @@ int	fetch_map_detail(t_game *game)
 	return (EXIT_SUCCESS);
 }
 
+int	assessment_png_file(t_game *game)
+{
+	if ((game->map.texture.no = mlx_load_png(game->map.no_xpm)) == NULL)
+		return (finish(game, "North PNG file data worng!", NOSYSERR));
+	if ((game->map.texture.so = mlx_load_png(game->map.so_xpm)) == NULL)
+		return (finish(game, "South PNG file data worng!", NOSYSERR));
+	if ((game->map.texture.ea = mlx_load_png(game->map.ea_xpm)) == NULL)
+		return (finish(game, "East PNG file data worng!", NOSYSERR));
+	if ((game->map.texture.we = mlx_load_png(game->map.we_xpm)) == NULL)
+		return (finish(game, "West PNG file data worng!", NOSYSERR));
+	return(EXIT_SUCCESS);
+}
+
 int	parsing_map(t_game *game)
 {
 	fetch_map_detail(game);
 	assessment_element(game, NOSYSERR);
+	assessment_png_file(game);
 	assessment_map(game);
+	pad_map_lines(game->map.grid, game->map.map_height, game->map.max_width, game->map.widths);
 	return (EXIT_SUCCESS);
 }
 
@@ -472,9 +490,9 @@ int	check_map_file_format_add(t_game *game, char *file)
 
 int	checking_map(int ac, char **av, t_game *game)
 {
-	initiate_game(game, av[1]);
 	if (ac != 2)
 		return (finish(game, "Wrong input numbers!", NOSYSERR), EXIT_FAILURE);
+	initiate_game(game, av[1]);
 	if (check_map_file_format_add(game, av[1]))
 		return (EXIT_FAILURE);
 	if (parsing_map(game))

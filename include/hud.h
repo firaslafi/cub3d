@@ -31,4 +31,5 @@ bool    mini_map(t_game *game);
 void    fill_map_circle(t_game	*game);
 bool	mlx_initiate(t_game	*game);
 void    mlx_key(mlx_key_data_t keydata, void* param);
+void    pad_map_lines(char **map, uint32_t map_height, uint32_t longest_line, uint32_t *line_lengths);
 #endif

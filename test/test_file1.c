@@ -1,14 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 10:47:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/13 22:30:55 by flafi            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
 
 #include "../libs/MLX42/include/MLX42/MLX42.h"
 #include "../libs/libft/libft/libft.h"
@@ -17,6 +8,7 @@
 #include <stdio.h>
 #include "../include/cub_3d.h"
 # include <string.h>
+
 
 
 # define S_W 1900 // screen width
@@ -60,8 +52,8 @@
 
 typedef struct s_data	//the data structure
 {
-	char	**map2d;	// the map game->map.grid
-	int		p_x;		// player x position in the map game->ply.pos.x
+	char	**map2d;	// the map
+	int		p_x;		// player x position in the map
 	int		p_y;		// player y position in the map
 	int		w_map;		// map width
 	int		h_map;		// map height
@@ -75,8 +67,6 @@ typedef struct s_mlx	//the mlx structure
 	t_ray			*ray;	// the ray structure
 	t_data			*dt;	// the data structure
 	t_player		*ply;	// the player structure
-    t_tex   *texture;
-    
 }	t_mlx;
 
 //##############################################################################//
@@ -274,6 +264,9 @@ float nor_angle(float angle) {
     return angle;
 }
 
+
+
+
 void	draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix)	// draw the floor and the ceiling
 {
 	int		i;
@@ -285,22 +278,25 @@ void	draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix)	// draw the f
 	while (i < t_pix)
 		my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // ceiling
 }
+
+
     
-mlx_texture_t *get_west_wall_color(t_mlx *mlx) 
+mlx_texture_t *get_west_wall_color() 
 {
-    return mlx->texture->no; // Color for the west wall
+    return data->texture->no; // Color for the west wall
 }
 
-mlx_texture_t *get_east_wall_color(t_mlx *mlx) {
-    return mlx->texture->no; // Color for the east wall
+
+mlx_texture_t *get_east_wall_color() {
+    return data->texture->no; // Color for the east wall
 }
 
-mlx_texture_t *get_south_wall_color(t_mlx *mlx) {
-    return mlx->texture->so;; // Color for the south wall
+mlx_texture_t *get_south_wall_color() {
+    return data->texture->so;; // Color for the south wall
 }
 
-mlx_texture_t *get_north_wall_color(t_mlx *mlx) {
-    return mlx->texture->so;; // Color for the north wall
+mlx_texture_t *get_north_wall_color() {
+    return data->texture->so;; // Color for the north wall
 }
 
 mlx_texture_t *get_color(t_mlx *mlx, int flag) {
@@ -311,17 +307,17 @@ mlx_texture_t *get_color(t_mlx *mlx, int flag) {
     if (flag == 0) {
         // West wall
         if (mlx->ray->ray_ngl > M_PI / 2 && mlx->ray->ray_ngl < 3 * (M_PI / 2))
-            return get_west_wall_color(mlx);
+            return get_west_wall_color();
         // East wall
         else
-            return get_east_wall_color(mlx);
+            return get_east_wall_color();
     } else {
         // South wall
         if (mlx->ray->ray_ngl > 0 && mlx->ray->ray_ngl < M_PI)
-            return get_south_wall_color(mlx);
+            return get_south_wall_color();
         // North wall
         else
-            return get_north_wall_color(mlx);
+            return get_north_wall_color();
     }
 }
 
@@ -562,46 +558,15 @@ void init_the_player(t_mlx mlx)	// init the player structure
 	mlx.ply->angle = M_PI; // player angle
 	//the rest of the variables are initialized to zero by calloc
 }
-void	initiate_player(t_game *game)
-{
-	game->ply.pos.x = 0;
-	game->ply.pos.y = 0;
-	game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
-	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
-	game->ply.angle = M_PI; // player angle
-	game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
-	game->ply.rot = 0;
-	game->ply.l_r = 0;
-	game->ply.u_d = 0;
-}
 
-void	initiate_ray(t_game *game)
-{
-	game->ray.index = 0;
-	game->ray.ray_ngl = 0;
-	game->ray.horiz_x = 0;
-	game->ray.horiz_y = 0;
-	game->ray.vert_x = 0;
-	game->ray.vert_y = 0;
-	game->ray.distance = 0;
-	game->ray.flag = 0;
-}
 void	start_the_game(t_data *dt)	// start the game
 {
 	t_mlx	mlx;
-    t_game  game;
 
 	mlx.dt = dt;	// init the mlx structure
-	// mlx.ply = calloc(1, sizeof(t_player));	// init the player structure i'm using calloc to initialize the variables to zero
-	// mlx.ray = calloc(1, sizeof(t_ray));	// init the ray structure
-	initiate_player(&game);
-    initiate_ray(&game);
-	mlx.ply = &game.ply;
-	mlx.ray = &game.ray;
-    mlx.mlx_p = mlx_init(S_W, S_H, "Cub3D", 0);	// init the mlx pointer
-    mlx.texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
-    mlx.texture->no = mlx_load_png("../texture/stone_wall.png"); // this texture
-    mlx.texture->so = mlx_load_png("../texture/wolf.png");
+	mlx.ply = calloc(1, sizeof(t_player));	// init the player structure i'm using calloc to initialize the variables to zero
+	mlx.ray = calloc(1, sizeof(t_ray));	// init the ray structure
+	mlx.mlx_p = mlx_init(S_W, S_H, "Cub3D", 0);	// init the mlx pointer
 	init_the_player(mlx);	// init the player structure
 	mlx_loop_hook(mlx.mlx_p, &game_loop, &mlx);	// game loop
 	mlx_key_hook(mlx.mlx_p, &mlx_key, &mlx);	// key press and release
@@ -616,16 +581,16 @@ t_data *init_argumet()	// init the data structure
 {
 	t_data *dt = calloc(1, sizeof(t_data)); // init the data structure
 	dt->map2d = calloc(10, sizeof(char *)); // init the map
-	dt->map2d[0] = strdup("1111111111111111111111111\0"); //fill the map
-	dt->map2d[1] = strdup("1000000000000000000100001\0");
-	dt->map2d[2] = strdup("1001000000000P00000000001\0");
-	dt->map2d[3] = strdup("1001000000000000001000001\0");
-	dt->map2d[4] = strdup("1001000000000000001000001\0");
-	dt->map2d[5] = strdup("1001000000100000001000001\0");
-	dt->map2d[6] = strdup("1001000000000000001000001\0");
-	dt->map2d[7] = strdup("1001000000001000001000001\0");
-	dt->map2d[8] = strdup("1111111111111111111111111\0");
-	// dt->map2d[9] = NULL;
+	dt->map2d[0] = strdup("1111111111111111111111111"); //fill the map
+	dt->map2d[1] = strdup("1000000000000000000100001");
+	dt->map2d[2] = strdup("1001000000000P00000000001");
+	dt->map2d[3] = strdup("1001000000000000001000001");
+	dt->map2d[4] = strdup("1001000000000000001000001");
+	dt->map2d[5] = strdup("1001000000100000001000001");
+	dt->map2d[6] = strdup("1001000000000000001000001");
+	dt->map2d[7] = strdup("1001000000001000001000001");
+	dt->map2d[8] = strdup("1111111111111111111111111");
+	dt->map2d[9] = NULL;
 	dt->p_y = 3; // player y position in the map
 	dt->p_x = 14; // player x position in the map
 	dt->w_map = 25; // map width
@@ -635,17 +600,14 @@ t_data *init_argumet()	// init the data structure
 
 
 
-int main(int ac, char **av)	// main function
+int main()	// main function
 {
     t_data	*data;
 	data = init_argumet();	// init the data structure
-    // data->texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
-    // data->texture->no = mlx_load_png("../texture/stone_wall.png");
-    // data->texture->so = mlx_load_png("../texture/wolf.png");
+    data->texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
+    data->texture->no = mlx_load_png("stone_wall.png");
+    data->texture->so = mlx_load_png("wolf.png");
 	
 	start_the_game(data);	// start the game
 	return 0;
 }
-
-
-//gcc raycast.c ./libs/MLX42/build/libmlx42.a ./libs/libft/libft.a -Iinclude -ldl -lglfw -pthread -lm -fsanitize=address -o navid

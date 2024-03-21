@@ -49,8 +49,8 @@
 
 # define TILE_SIZE 40 // tile size
 # define FOV 60 // field of view
-# define ROTATION_SPEED 0.07 // rotation speed
-# define PLAYER_SPEED 5	// player speed
+# define ROTATION_SPEED 0.03 // rotation speed
+# define PLAYER_SPEED 3	// player speed
 
 typedef struct s_parse t_parse;
 
@@ -61,13 +61,13 @@ typedef struct s_parse t_parse;
 # define WIN_HEIGHT 1000
 # define DOT_SIZE	10
 
-// typedef struct s_tex
-// {
-// 	mlx_texture_t	*no;
-// 	mlx_texture_t	*so;
-// 	mlx_texture_t	*we;
-// 	mlx_texture_t	*ea;
-// }	t_tex;
+typedef struct s_tex
+{
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+}	t_tex;
 
 typedef struct s_map{
 	int			resolution_x;
@@ -84,7 +84,7 @@ typedef struct s_map{
 	uint32_t	map_height;
 	uint32_t	max_width;
 	uint32_t	*widths;
-
+	t_tex		texture;
 }		t_map;
 
 typedef struct s_parse{

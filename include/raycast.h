@@ -21,7 +21,7 @@ typedef struct s_pos t_pos;
 
 
 /*****************raycast_main.c********************/
-void	start_the_game(t_game *game);	// start the game
+// void	start_the_game(t_game *game);	// start the game
 
 
 #endif

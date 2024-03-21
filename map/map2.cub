@@ -6,9 +6,9 @@ NO 				            ./texture/stone_wall.png
 			SO ./texture/wolf.png  		
 
 	
-		EA   	  ./texture/east_texture.xpm 		    
+		EA   	  ./texture/brick.png 		    
  
- WE     	  ./texture/west_texture.xpm
+ WE     	  ./texture/standstone.png
 
 
  	 	 	 	 F      27,32,11    

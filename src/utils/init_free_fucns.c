@@ -12,6 +12,35 @@
 
 #include "../include/utils.h"
 
+void print_map_details(t_game *game)
+{
+	if (game->map.no_xpm)
+		printf(RED"NO:"RESET"%s\n", game->map.no_xpm);
+	if (game->map.so_xpm)
+		printf(RED"SO:"RESET"%s\n", game->map.so_xpm);
+	if (game->map.ea_xpm)
+		printf(RED"EA:"RESET"%s\n", game->map.ea_xpm);
+	if (game->map.we_xpm)
+		printf(RED"WE:"RESET"%s\n", game->map.we_xpm);
+	if (game->map.ceiling_color[0])
+		printf(GREEN"Ceiling:"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
+		RESET"%d\n", game->map.ceiling_color[0], game->map.ceiling_color[1],
+			game->map.ceiling_color[2]);
+	if (game->map.floor_color[0])
+		printf(GREEN"Floor  :"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
+		RESET"%d\n", game->map.floor_color[0], game->map.floor_color[1],
+			game->map.floor_color[2]);
+	if (game->map.grid)
+	{
+		for(int i = 0; game->map.grid[i]; i++)
+			// printf(GREEN"%s\n"RESET, game->map.grid[i]);
+			printf(GREEN"line[%d]: length:[%d]"RESET ORG"	|%s|\n", i, game->map.widths[i], game->map.grid[i]);
+	printf("longest line is: "RESET RED"%d\n"RESET, game->map.max_width);
+	printf(ORG"Player pos: x: "RESET RED"%d"RESET ORG" y: " RESET RED"%d\n"RESET, game->ply.pos.x, game->ply.pos.y);
+	}
+}
+
+
 void	initiate_map(t_map *map)
 {
 	map->resolution_x = 0;
@@ -30,6 +59,10 @@ void	initiate_map(t_map *map)
 	// map->map_width = 0;
 	map->map_height = 0;
 	map->widths = NULL;
+	map->texture.no = NULL;
+	map->texture.so = NULL;
+	map->texture.ea = NULL;
+	map->texture.we = NULL;
 }
 
 void	initiate_parser(t_parse *parser, t_game *game, char *file)
@@ -87,8 +120,6 @@ void	initiate_hud(t_game *game)
 
 void	initiate_game(t_game *game, char *file)
 {
-	// game->parser = (t_parse *)ft_calloc(1, sizeof(t_parse));
-	// game->map = (t_map *)ft_calloc(1, sizeof(t_map));
 	initiate_map(&game->map);
 	initiate_parser(&game->parser, game, file);
 	initiate_player(game);

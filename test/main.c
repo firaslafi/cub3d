@@ -50,13 +50,13 @@
 // }	t_ray;
 
 
-// typedef struct s_tex
-// {
-// 	mlx_texture_t	*no;
-// 	mlx_texture_t	*so;
-// 	mlx_texture_t	*we;
-// 	mlx_texture_t	*ea;
-// }	t_tex;
+typedef struct s_tex
+{
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+}	t_tex;
 
 typedef struct s_data	//the data structure
 {
@@ -600,8 +600,8 @@ void	start_the_game(t_data *dt)	// start the game
 	mlx.ray = &game.ray;
     mlx.mlx_p = mlx_init(S_W, S_H, "Cub3D", 0);	// init the mlx pointer
     mlx.texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
-    mlx.texture->no = mlx_load_png("../texture/stone_wall.png"); // this texture
-    mlx.texture->so = mlx_load_png("../texture/wolf.png");
+    mlx.texture->no = mlx_load_png("stone_wall.png"); // this texture
+    mlx.texture->so = mlx_load_png("wolf.png");
 	init_the_player(mlx);	// init the player structure
 	mlx_loop_hook(mlx.mlx_p, &game_loop, &mlx);	// game loop
 	mlx_key_hook(mlx.mlx_p, &mlx_key, &mlx);	// key press and release
@@ -637,14 +637,21 @@ t_data *init_argumet()	// init the data structure
 
 int main(int ac, char **av)	// main function
 {
+    
+    t_game	game;
+
+	if (checking_map(ac, av, &game))
+		return (close_game(&game), EXIT_FAILURE);
+	print_map_details(&game);
+    
     t_data	*data;
-	data = init_argumet();	// init the data structure
-    // data->texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
-    // data->texture->no = mlx_load_png("../texture/stone_wall.png");
-    // data->texture->so = mlx_load_png("../texture/wolf.png");
-	
+	data->map2d = game.map.grid;
+    data->p_y = game.ply.pos.y;	// init the data structure
+    data->p_x = game.ply.pos.x;	// init the data structure
+    data->w_map = game.map.map_height;
+    data->h_map = game.map.max_width;
 	start_the_game(data);	// start the game
-	return 0;
+	return (close_game(&game), EXIT_SUCCESS);
 }
 
 

@@ -275,7 +275,7 @@ void fill_map_circle(t_game *game)
     }
 }
 
-void pad_lines(char **map, uint32_t map_height, uint32_t longest_line, uint32_t *line_lengths) {
+void pad_map_lines(char **map, uint32_t map_height, uint32_t longest_line, uint32_t *line_lengths) {
     // Iterate over each line of the map
     for (size_t i = 0; i < map_height; i++) {
         size_t current_length = line_lengths[i];
@@ -311,7 +311,7 @@ void pad_lines(char **map, uint32_t map_height, uint32_t longest_line, uint32_t 
 bool	mini_map(t_game	*game)
 {
 	game->hud.map = creat_sample_gird(game);
-	pad_lines(game->hud.map, game->map.map_height, game->map.max_width, game->map.widths);
+	// pad_lines(game->hud.map, game->map.map_height, game->map.max_width, game->map.widths);
 	for(uint32_t i = 0; i < game->map.map_height; i++)
 		printf(GREEN"line[%d]: length:[%zu]"RESET RED"	|%s|\n"RESET, i, ft_strlen(game->hud.map[i]), game->hud.map[i]);
 	game->hud.pos = game->ply.pos;
@@ -324,12 +324,12 @@ bool	mini_map(t_game	*game)
 	if (!game->hud.circle_bck || mlx_image_to_window(game->mlx, game->hud.circle_bck, 0, 0) < 0)
 		return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
 	// fill_circle(game);
-	fill_map_circle(game);
-	// draw_minimap(game);
+	// fill_map_circle(game);
+	draw_minimap(game);
 	game->hud.circle = mlx_new_image(game->mlx, game->mlx->width, game->mlx->height); //later on the width and heigh should be changed
 	if (!game->hud.circle || mlx_image_to_window(game->mlx, game->hud.circle, 0, 0) < 0)
 		return (finish(game, "MLX Windows failed!!!",NOSYSERR), false);
-	draw_circle(game, 110);
+	// draw_circle(game, 110);
 	// draw_circle(game, 109);
 	// draw_circle(game, 111);
 	// mlx_put_pixel(game->scn.img, 100, 100, 0xFF0000FF);

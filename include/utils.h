@@ -33,4 +33,8 @@ void	close_game(t_game *game);
 char    *error_table(char *code);
 int     finish(t_game *game, char *msg, int no);
 
+
+/**************print_map_details.c***************/
+void print_map_details(t_game *game);
+
 #endif

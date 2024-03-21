@@ -49,8 +49,8 @@
 
 # define TILE_SIZE 40 // tile size
 # define FOV 60 // field of view
-# define ROTATION_SPEED 0.03 // rotation speed
-# define PLAYER_SPEED 3	// player speed
+# define ROTATION_SPEED 0.08 // rotation speed
+# define PLAYER_SPEED 8	// player speed
 
 typedef struct s_parse t_parse;
 

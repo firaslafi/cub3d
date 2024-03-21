@@ -85,16 +85,16 @@ typedef struct s_mlx	//the mlx structure
 
 void	ft_exit(t_mlx *mlx) 		// exit the game
 {
-	int	i = 0;
-	while (mlx->dt->map2d[i])
-		free(mlx->dt->map2d[i++]); // free the map line by line
-	free(mlx->dt->map2d); // free the map
-	free(mlx->dt); // free the data structure
-	free(mlx->ply); // free the player structure
-	free(mlx->ray); // free the ray structure
+	// int	i = 0;
+	// while (mlx->dt->map2d[i])
+		// free(mlx->dt->map2d[i++]); // free the map line by line
+	// free(mlx->dt->map2d); // free the map
+	// free(mlx->dt); // free the data structure
+	// free(mlx->ply); // free the player structure
+	// free(mlx->ray); // free the ray structure
 	mlx_delete_image(mlx->mlx_p, mlx->img); // delete the image
-	mlx_close_window(mlx->mlx_p); // close the window
-	mlx_terminate(mlx->mlx_p); // terminate the mlx pointer
+	// mlx_close_window(mlx->mlx_p); // close the window
+	// mlx_terminate(mlx->mlx_p); // terminate the mlx pointer
 	printf("Game closed\n"); // print the message
 	exit(0); // exit the game
 }
@@ -549,6 +549,7 @@ void	game_loop(void *ml)	// game loop
 	mlx = ml;	// cast to the mlx structure
 	mlx_delete_image(mlx->mlx_p, mlx->img);	// delete the image
 	mlx->img = mlx_new_image(mlx->mlx_p, S_W, S_H);	// create new image
+	mlx->img = mlx_new_image(mlx->mlx_p, S_W, S_H);	// create new image
 	hook(mlx, 0, 0); // hook the player
 	cast_rays(mlx);	// cast the rays
 	mlx_image_to_window(mlx->mlx_p, mlx->img, 0, 0); // put the image to the window
@@ -577,6 +578,7 @@ void	start_the_game(t_data *dt, t_game *game)	// start the game
 	mlx.ply = &game->ply;
 	mlx.ray = &game->ray;
     mlx.mlx_p = game->mlx;
+    game->scn.img = mlx.img;
     mlx.texture.no = game->map.texture.no;
     mlx.texture.so = game->map.texture.so;
     mlx.texture.ea = game->map.texture.no;
@@ -630,8 +632,8 @@ int main(int ac, char **av)	// main function
 	data.map2d = game.map.grid;
     data.p_y = game.ply.pos.y;	// init the data structure
     data.p_x = game.ply.pos.x;	// init the data structure
-    data.w_map = game.map.map_height;
-    data.h_map = game.map.max_width;
+    data.w_map = game.map.max_width;
+    data.h_map = game.map.map_height;
 
     // data.texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
     // data.texture->no = mlx_load_png("./texture/stone_wall.png");

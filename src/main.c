@@ -549,7 +549,6 @@ void	game_loop(void *ml)	// game loop
 	mlx = ml;	// cast to the mlx structure
 	mlx_delete_image(mlx->mlx_p, mlx->img);	// delete the image
 	mlx->img = mlx_new_image(mlx->mlx_p, S_W, S_H);	// create new image
-	mlx->img = mlx_new_image(mlx->mlx_p, S_W, S_H);	// create new image
 	hook(mlx, 0, 0); // hook the player
 	cast_rays(mlx);	// cast the rays
 	mlx_image_to_window(mlx->mlx_p, mlx->img, 0, 0); // put the image to the window

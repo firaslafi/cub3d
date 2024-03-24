@@ -56,8 +56,8 @@ void	initiate_map(t_map *map)
 	map->ceiling_color[0] = -1;
 	map->ceiling_color[1] = -1;
 	map->ceiling_color[2] = -1;
-	// map->map_width = 0;
 	map->map_height = 0;
+	map->max_width = 0;
 	map->widths = NULL;
 	map->texture.no = NULL;
 	map->texture.so = NULL;
@@ -124,7 +124,7 @@ void	initiate_game(t_game *game, char *file)
 	initiate_parser(&game->parser, game, file);
 	initiate_player(game);
 	initiate_ray(game);
-	initiate_hud(game);
+	// initiate_hud(game);
 	game->scn.img = 0;
 	game->mlx = NULL;
 }
@@ -157,6 +157,13 @@ void	free_array(char **map)
 // 		free(parser);
 // 	}
 // }
+void	free_texture(mlx_texture_t *texture)
+{
+	if (texture)
+		mlx_delete_texture(texture);
+	texture = NULL;
+}
+
 void	free_map(t_map *map)
 {
 	
@@ -172,6 +179,10 @@ void	free_map(t_map *map)
 		free_array(map->grid);
 	if (map->widths)
 		free(map->widths);
+	free_texture(map->texture.no);
+	free_texture(map->texture.so);
+	free_texture(map->texture.ea);
+	free_texture(map->texture.we);
 	// free(map);
 	// map = NULL;
 }
@@ -183,12 +194,6 @@ void	free_image(mlx_t *mlx, mlx_image_t *image)
 	image = NULL;
 }
 
-void	free_texture(mlx_texture_t *texture)
-{
-	if (texture)
-		mlx_delete_texture(texture);
-	texture = NULL;
-}
 
 void	free_hud(t_game *game)
 {
@@ -212,9 +217,9 @@ void	free_mlx(t_game *game)
 	{
 		mlx_delete_image(game->mlx, game->scn.img);
 		mlx_close_window(game->mlx); // close the window
-		mlx_terminate(game->mlx);
-		// free(game->mlx);
-		// game->mlx = NULL;
+		// mlx_terminate(game->mlx);
+		free(game->mlx);
+		game->mlx = NULL;
 	}
 }
 
@@ -236,5 +241,6 @@ void	close_game(t_game *game)
 		// game->parser = NULL;
 		// free(game);
 		game = NULL;
+		exit(EXIT_SUCCESS);
 	}
 }

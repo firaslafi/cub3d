@@ -92,7 +92,6 @@ typedef struct s_parse{
     int     fd;
     char    *line;
     char    **split;
-    // bool    details_part;
     bool    map_part;
     t_map   *map;
 	t_game	*game;

@@ -50,34 +50,34 @@
 // }	t_ray;
 
 
-typedef struct s_tex
-{
-	mlx_texture_t	*no;
-	mlx_texture_t	*so;
-	mlx_texture_t	*we;
-	mlx_texture_t	*ea;
-}	t_tex;
+// typedef struct s_tex
+// {
+// 	mlx_texture_t	*no;
+// 	mlx_texture_t	*so;
+// 	mlx_texture_t	*we;
+// 	mlx_texture_t	*ea;
+// }	t_tex;
 
-typedef struct s_data	//the data structure
-{
-	char	**map2d;	// the map game->map.grid
-	int		p_x;		// player x position in the map game->ply.pos.x
-	int		p_y;		// player y position in the map
-	int		w_map;		// map width
-	int		h_map;		// map height
-	t_tex   *texture;
-}	t_data;
+// typedef struct s_data	//the data structure
+// {
+// 	char	**map2d;	// the map game->map.grid
+// 	int		p_x;		// player x position in the map game->ply.pos.x
+// 	int		p_y;		// player y position in the map
+// 	int		w_map;		// map width
+// 	int		h_map;		// map height
+// 	t_tex   *texture;
+// }	t_data;
 
-typedef struct s_mlx	//the mlx structure
-{
-	mlx_image_t		*img;	// the image
-	mlx_t			*mlx_p;	// the mlx pointer
-	t_ray			*ray;	// the ray structure
-	t_data			*dt;	// the data structure
-	t_player		*ply;	// the player structure
-	t_tex   *texture;
+// typedef struct s_mlx	//the mlx structure
+// {
+// 	mlx_image_t		*img;	// the image
+// 	mlx_t			*mlx_p;	// the mlx pointer
+// 	t_ray			*ray;	// the ray structure
+// 	t_data			*dt;	// the data structure
+// 	t_player		*ply;	// the player structure
+// 	t_tex   *texture;
 	
-}	t_mlx;
+// }	t_mlx;
 
 //##############################################################################//
 //############################## THE EXITING CODE ##############################//
@@ -126,13 +126,13 @@ void ft_reles(mlx_key_data_t keydata, t_game *game) {
 	release_rotation_keys(game, keydata);
 }
 
-void mlx_key(mlx_key_data_t keydata, void *ml)	// key press
+void mlx_key(mlx_key_data_t keydata, void *param)	// key press
 {
 	t_game	*game;
 
-	game = ml;
+	game = param;
 	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)) // exit the game
-		finish(game, "finish game", NOSYSERR);
+		finish(game, "finish game", MSG);
 	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS)) // move left
 		game->ply.l_r = -1;
 	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS)) // move right
@@ -436,15 +436,15 @@ int inter_check(float angle, float *inter, float *step, int is_horizon) { // che
 
 int	wall_hit(float x, float y, t_game *game)	// check the wall hit
 {
-	uint32_t	x_m;
-	uint32_t	y_m;
+	int	x_m;
+	int	y_m;
 
 	if (x < 0 || y < 0)
 		return (0);
 	x_m = floor (x / TILE_SIZE); // get the x position in the map
 	y_m = floor (y / TILE_SIZE); // get the y position in the map
 	// if (y_m < 0 || y_m >= game->map.map_height || x_m < 0 || x_m >= game->map.max_width)
-	if (y_m >= game->map.map_height || x_m >= game->map.max_width)
+	if (y_m < 0 || y_m >= (int)game->map.map_height || x_m < 0 || x_m >= (int)game->map.max_width)
 		return 0;
 
 	if (game->map.grid[y_m][x_m] == '1')
@@ -547,12 +547,11 @@ void	cast_rays(t_game *game)	// cast the rays
 //############################## START THE GAME AND THE GAME LOOP ##############################//
 //##############################################################################################//
 
-void	game_loop(void *ml)	// game loop
+void	game_loop(void *param)	// game loop
 {
 	t_game	*game;
 
-	game = ml;	// cast to the mlx structure
-		printf("hiiiiii2222222222222222222\n");
+	game = param;	// cast to the mlx structure
 	mlx_delete_image(game->mlx, game->scn.img);	// delete the image
 	game->scn.img = mlx_new_image(game->mlx, S_W, S_H);	// create new image
 	hook(game, 0, 0); // hook the player
@@ -560,14 +559,14 @@ void	game_loop(void *ml)	// game loop
 	mlx_image_to_window(game->mlx, game->scn.img, 0, 0); // put the image to the window
 }
 
-// void init_the_player(t_game *game)	// init the player structure
-// {
-//     game->ply->plyr_x = game->ply->pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
-// 	game->ply->plyr_y = game->ply->pos.x * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
-// 	game->ply->fov_rd = (FOV * M_PI) / 180; // field of view in radians
-// 	game->ply->angle = M_PI; // player angle
-// 	//the rest of the variables are initialized to zero by calloc
-// }
+void init_the_player(t_game *game)	// init the player structure
+{
+    game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
+	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
+	game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
+	game->ply.angle = M_PI; // player angle
+	//the rest of the variables are initialized to zero by calloc
+}
 
 void	start_the_game(t_game *game)	// start the game
 {
@@ -582,7 +581,7 @@ void	start_the_game(t_game *game)	// start the game
 	// mlx.texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
 	// mlx.texture->no = mlx_load_png("stone_wall.png"); // this texture
 	// mlx.texture->so = mlx_load_png("wolf.png");
-	// init_the_player(game);	// init the player structure
+	init_the_player(game);	// init the player structure
 	mlx_loop_hook(game->mlx, &game_loop, game);	// game loop
 	mlx_key_hook(game->mlx, &mlx_key, game);	// key press and release
 	mlx_loop(game->mlx);	// mlx loop
@@ -615,18 +614,13 @@ void	start_the_game(t_game *game)	// start the game
 
 
 
-// int main()	// main function
-// {
+int main(int ac, char **av)	// main function
+{
     t_game	game;
 	
     if (checking_map(ac, av, &game))
 		return (EXIT_FAILURE);
 	print_map_details(&game);
-	start_the_game(&data, &game);	// start the game
+	start_the_game(&game);	// start the game
 	return (close_game(&game), EXIT_SUCCESS);
-
-
-
-	
-	return 0;;
-// }
+}

@@ -1,0 +1,10 @@
+NO ./textures/white_64.png
+SO ./textures/desktop.png
+WE ./textures/white_64.png
+EA ./textures/desktop.png
+
+F 220,100,0
+C 225,30,0
+
+
+

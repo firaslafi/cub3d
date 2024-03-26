@@ -1,5 +1,16 @@
 {
     "files.associations": {
-        "stdlib.h": "c"
-    }
+        "stdlib.h": "c",
+        "cub_3d.h": "c",
+        "cstdlib": "c",
+        "atomic": "cpp",
+        "memory": "cpp",
+        "utility": "cpp",
+        "algorithm": "c",
+        "hud.h": "c",
+        "raycast.h": "c",
+        "stdio.h": "c",
+        "math.h": "c"
+    },
+    "cmake.sourceDirectory": "/home/nnavidd/projects/Cub3D/libs/MLX42"
 }

@@ -6,20 +6,17 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:47:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/26 04:40:12 by flafi            ###   ########.fr       */
+/*   Updated: 2024/03/27 14:01:14 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/cub_3d.h"
-#include <string.h>
 
 #define S_W 1900
 #define S_H 1000
 
 //############################## THE MOUVEMENT CODE ##############################//
-
-
+// release key but for directions
 void	release_movement_keys(t_game *game, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE)
@@ -31,7 +28,7 @@ void	release_movement_keys(t_game *game, mlx_key_data_t keydata)
 	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
 		game->ply.u_d = 0;
 }
-
+// release key but for rotation
 void	release_rotation_keys(t_game *game, mlx_key_data_t keydata)
 {
 	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
@@ -39,44 +36,39 @@ void	release_rotation_keys(t_game *game, mlx_key_data_t keydata)
 	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
 		game->ply.rot = 0;
 }
-
-void	ft_reles(mlx_key_data_t keydata, t_game *game)
+// release keys
+void	ft_release_key(mlx_key_data_t keydata, t_game *game)
 {
 	release_movement_keys(game, keydata);
 	release_rotation_keys(game, keydata);
 }
-
-void	mlx_key(mlx_key_data_t keydata, void *param) // key press
+// mlx key press register and release
+void	mlx_key(mlx_key_data_t keydata, void *param)
 {
 	t_game *game;
 
 	game = param;
 	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS
-			|| keydata.action == MLX_REPEAT)) // exit the game
+			|| keydata.action == MLX_REPEAT))
 		finish(game, "finish game", MSG);
 	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
-		// move left
 		game->ply.l_r = -1;
 	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS))
-		// move right
 		game->ply.l_r = 1;
 	else if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS))
-		// move down
 		game->ply.u_d = -1;
-	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS) // move up
+	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 		game->ply.u_d = 1;
 	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
-		// rotate left
 		game->ply.rot = -1;
 	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
-		// rotate right
 		game->ply.rot = 1;
-	ft_reles(keydata, game); // release the key
+	ft_release_key(keydata, game);
 }
 
+// Adjust angle to keep it within [0, 2π)
 void	adjust_angle(double *angle)
 {
-	// Adjust angle to keep it within [0, 2π)
 	while (*angle >= 2 * M_PI)
 		*angle -= 2 * M_PI;
 	while (*angle < 0)
@@ -85,43 +77,38 @@ void	adjust_angle(double *angle)
 // rotate the player
 void	rotate_player(t_game *game, int i)
 {
-	double rotation;
+	double	rotation;
 
 	if (i == 1)
 	{
-		rotation = ROTATION_SPEED; // rotate right
+		rotation = ROTATION_SPEED;
 	}
 	else
 	{
-		rotation = -ROTATION_SPEED; // rotate left
+		rotation = -ROTATION_SPEED;
 	}
-
 	game->ply.angle += rotation;
 	adjust_angle(&(game->ply.angle));
 }
 
-
-// move the player
-void	move_player(t_game *game, double move_x, double move_y)
+// checks for wall collisions
+int is_valid_move(const t_game *game, int new_x, int new_y)
 {
-	// Calculate inverse of TILE_SIZE if not already calculated
-	static const double inv_TILE_SIZE = 1.0 / TILE_SIZE;
-
-	// Calculate new grid positions using integer arithmetic
-	int new_x = round(game->ply.plyr_x + move_x);
-	int new_y = round(game->ply.plyr_y + move_y);
-	int map_grid_x = (int)(new_x * inv_TILE_SIZE);
-	int map_grid_y = (int)(new_y * inv_TILE_SIZE);
-
-	// Check for wall collisions
-	if (game->map.grid[map_grid_y][map_grid_x] != '1'
-		&& game->map.grid[(int)(new_y * inv_TILE_SIZE)][(int)(new_x
-			* inv_TILE_SIZE)] != '1')
-	{
-		// Update player position
-		game->ply.plyr_x = new_x;
-		game->ply.plyr_y = new_y;
-	}
+    int map_grid_x = (int)(new_x * inv_TILE_SIZE);
+    int map_grid_y = (int)(new_y * inv_TILE_SIZE);
+    
+    return (game->map.grid[map_grid_y][map_grid_x] != '1'
+        && game->map.grid[(int)(new_y * inv_TILE_SIZE)][(int)(new_x * inv_TILE_SIZE)] != '1');
+}
+// move the player and checks for wall collisions
+void move_player(t_game *game, double move_x, double move_y) {
+    int new_x = round(game->ply.plyr_x + move_x);
+    int new_y = round(game->ply.plyr_y + move_y);
+    
+    if (is_valid_move(game, new_x, new_y)) {
+        game->ply.plyr_x = new_x;
+        game->ply.plyr_y = new_y;
+    }
 }
 
 // ********************************** // **********************************
@@ -172,46 +159,42 @@ void	hook(t_game *game, double move_x, double move_y)
 		move_down(game, &move_x, &move_y);
 	move_player(game, move_x, move_y); // move the player
 }
-// **********************************// **********************************
 
-//#####################################################################################//
 //############################## THE WALL RENDERING CODE ##############################//
-//#####################################################################################//
 
 void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
 {
-	if (x < 0) // Check if x position is out of bounds
+	if (x < 0)
 		x = 0;
 	else if (x >= S_W)
 		x = S_W - 1;
-	if (y < 0) // Check if y position is out of bounds
+	if (y < 0)
 		y = 0;
 	else if (y >= S_H)
 		y = S_H - 1;
-	mlx_put_pixel(game->scn.img, x, y, color); // Put the pixel
+	mlx_put_pixel(game->scn.img, x, y, color);
 }
-
+// Normalize angle using modulo operation
+// Ensure the result is within [0, 2π)
 float	nor_angle(float angle)
 {
-	// Normalize angle using modulo operation
 	angle = fmod(angle, 2 * M_PI);
-	// Ensure the result is within [0, 2π)
 	if (angle < 0)
 		angle += 2 * M_PI;
 	return (angle);
 }
 
-void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix)
 // draw the floor and the ceiling
+void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix)
 {
 	int i;
 
 	i = b_pix;
 	while (i < S_H)
-		my_mlx_pixel_put(game, ray, i++, 0x005C4033); // floor
+		my_mlx_pixel_put(game, ray, i++, 0x005C4033);
 	i = 0;
 	while (i < t_pix)
-		my_mlx_pixel_put(game, ray, i++, 0xB99470FF); // ceiling
+		my_mlx_pixel_put(game, ray, i++, 0xB99470FF);
 }
 
 mlx_texture_t	*get_west_wall_color(t_game *game)
@@ -234,29 +217,25 @@ mlx_texture_t	*get_north_wall_color(t_game *game)
 	return (game->map.texture.so); // Color for the north wall
 }
 
-mlx_texture_t	*get_color(t_game *game, int flag)
+mlx_texture_t	*get_textures(t_game *game, int flag)
 {
 	game->ray.ray_ngl = nor_angle(game->ray.ray_ngl); // Normalize the angle
 	if (flag == 0)
 	{
-		// West wall
 		if (game->ray.ray_ngl > M_PI / 2 && game->ray.ray_ngl < 3 * (M_PI / 2))
 			return (get_west_wall_color(game));
-		// East wall
 		else
 			return (get_east_wall_color(game));
 	}
 	else
 	{
-		// South wall
 		if (game->ray.ray_ngl > 0 && game->ray.ray_ngl < M_PI)
 			return (get_south_wall_color(game));
-		// North wall
 		else
 			return (get_north_wall_color(game));
 	}
 }
-
+// calculate X of the texture based on the player's position and wall distance
 double	get_x_o(mlx_texture_t *texture, t_game *game, double wall_distance)
 {
 	double	x_o;
@@ -269,17 +248,10 @@ double	get_x_o(mlx_texture_t *texture, t_game *game, double wall_distance)
 			* (texture->width / TILE_SIZE), texture->width);
 	return (x_o);
 }
-// refractor this BITEEEEEEEEEEEEEE
-int	reverse_bytes(int c)
+// reverse bytes to get real colors
+uint32_t	reverse_bytes(uint32_t c)
 {
-	unsigned int	b;
-
-	b = 0;
-	b |= (c & 0xFF) << 24;
-	b |= (c & 0xFF00) << 8;
-	b |= (c & 0xFF0000) >> 8;
-	b |= (c & 0xFF000000) >> 24;
-	return (b);
+	return ((c & 0x000000FF) << 24) | ((c & 0x0000FF00) << 8) | ((c & 0x00FF0000) >> 8) | ((c & 0xFF000000) >> 24);
 }
 
 void	draw_wall(t_game *game, int t_pix, int b_pix, double wall_h)
@@ -290,7 +262,7 @@ void	draw_wall(t_game *game, int t_pix, int b_pix, double wall_h)
 	uint32_t		*arr;
 	double			factor;
 
-	texture = get_color(game, game->ray.flag);
+	texture = get_textures(game, game->ray.flag);
 	arr = (uint32_t *)texture->pixels;
 	factor = (double)texture->height / wall_h;
 	x_o = get_x_o(texture, game, game->ray.distance);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:29:06 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/03/06 10:34:46 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/03/27 13:26:04 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_parse t_parse;
 # define WIN_WIDTH  1900
 # define WIN_HEIGHT 1000
 # define DOT_SIZE	10
+
+static const double inv_TILE_SIZE = 1.0 / TILE_SIZE;
 
 typedef struct s_tex
 {

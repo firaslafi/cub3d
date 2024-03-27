@@ -128,6 +128,7 @@ int read_map(t_game *game)
 	map->grid[++map->map_height] = NULL;
 	return (0);
 }
+
 bool	check_texture_file_path(char *path)
 {
 	int	fd;

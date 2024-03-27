@@ -28,6 +28,7 @@ typedef struct s_pos t_pos;
 
 /*****************hud_main.c********************/
 bool    mini_map(t_game *game);
+bool    draw_minimap(t_game *game);
 void    fill_map_circle(t_game	*game);
 bool	mlx_initiate(t_game	*game);
 void    mlx_key(mlx_key_data_t keydata, void* param);

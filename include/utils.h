@@ -35,6 +35,6 @@ int     finish(t_game *game, char *msg, int no);
 
 
 /**************print_map_details.c***************/
-void print_map_details(t_game *game);
+void    print_map_details(t_game *game);
 
 #endif

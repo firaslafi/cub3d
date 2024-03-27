@@ -129,6 +129,7 @@ typedef struct s_hud{
 	mlx_texture_t	*w_dot;
 	mlx_texture_t	*b_dot;
 	mlx_image_t		*img_wall;
+	mlx_image_t		*img;
 	int				ply_flag;
 }	t_hud;
 

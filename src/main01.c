@@ -554,8 +554,11 @@ void	game_loop(void *param)	// game loop
 	game = param;	// cast to the mlx structure
 	mlx_delete_image(game->mlx, game->scn.img);	// delete the image
 	game->scn.img = mlx_new_image(game->mlx, S_W, S_H);	// create new image
+	mlx_delete_image(game->mlx, game->hud.img);	// delete the image
+	game->hud.img = mlx_new_image(game->mlx, S_W, S_H);	// create new image
 	hook(game, 0, 0); // hook the player
 	cast_rays(game);	// cast the rays
+	mlx_image_to_window(game->mlx, game->hud.img, 0, 0);
 	mlx_image_to_window(game->mlx, game->scn.img, 0, 0); // put the image to the window
 }
 
@@ -568,51 +571,28 @@ void init_the_player(t_game *game)	// init the player structure
 	//the rest of the variables are initialized to zero by calloc
 }
 
-void	start_the_game(t_game *game)	// start the game
+void	raycast(t_game *game)
 {
-	// t_mlx	mlx;
-	// t_game  *game;
-
-	// mlx.dt = dt;	// init the mlx structure
-	// game->ply = (t_player *)calloc(1, sizeof(t_player));	// init the player structure i'm using calloc to initialize the variables to zero
-	// mlx.ray = calloc(1, sizeof(t_ray));	// init the ray structure
-	// mlx.mlx_p = mlx_init(S_W, S_H, "Cub3D", 0);	// init the mlx pointer
-	game->mlx = mlx_init(S_W, S_H, "Cub3D", 0);	// init the mlx pointer
-	// mlx.texture = (t_tex *)(malloc(sizeof(t_tex)));  // move to init argument
-	// mlx.texture->no = mlx_load_png("stone_wall.png"); // this texture
-	// mlx.texture->so = mlx_load_png("wolf.png");
 	init_the_player(game);	// init the player structure
 	mlx_loop_hook(game->mlx, &game_loop, game);	// game loop
 	mlx_key_hook(game->mlx, &mlx_key, game);	// key press and release
+	draw_minimap(game);
 	mlx_loop(game->mlx);	// mlx loop
+
+}
+
+void	start_the_game(t_game *game)	// start the game
+{
+	game->mlx = mlx_init(S_W, S_H, "Cub3D", 0);	// init the mlx pointer
+	mini_map(game);
+	raycast(game);
+	printf("hiiii\n");
+
 }
 
 //################################################################################################//
 //############################## THE MAIN FUNCTION AND INIT THE MAP ##############################//
 //################################################################################################//
-
-// t_data *init_argumet()	// init the data structure
-// {
-	// t_data *dt = calloc(1, sizeof(t_data)); // init the data structure
-	// dt->map2d = calloc(10, sizeof(char *)); // init the map
-	// dt->map2d[0] = strdup("1111111111111111111111111"); //fill the map
-	// dt->map2d[1] = strdup("1000000000000000000100001");
-	// dt->map2d[2] = strdup("1001000000000P00000000001");
-	// dt->map2d[3] = strdup("1001000000000000001000001");
-	// dt->map2d[4] = strdup("1001000000000000001000001");
-	// dt->map2d[5] = strdup("1001000000100000001000001");
-	// dt->map2d[6] = strdup("1001000000000000001000001");
-	// dt->map2d[7] = strdup("1001000000001000001000001");
-	// dt->map2d[8] = strdup("1111111111111111111111111");
-	// dt->map2d[9] = NULL;
-	// dt->p_y = 3; // player y position in the map
-	// dt->p_x = 14; // player x position in the map
-	// dt->w_map = 25; // map width
-	// dt->h_map = 9; // map height
-// 	return (dt); // return the data structure
-// }
-
-
 
 int main(int ac, char **av)	// main function
 {

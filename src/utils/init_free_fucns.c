@@ -115,6 +115,7 @@ void	initiate_hud(t_game *game)
 	game->hud.w_dot = NULL;
 	game->hud.b_dot = NULL;
 	game->hud.img_wall = NULL;
+	game->hud.img = NULL;
 	game->hud.ply_flag = 0;
 }
 

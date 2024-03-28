@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:47:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/27 14:01:14 by flafi            ###   ########.fr       */
+/*   Updated: 2024/03/27 14:07:01 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,27 +199,27 @@ void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix)
 
 mlx_texture_t	*get_west_wall_color(t_game *game)
 {
-	return (game->map.texture.no); // Color for the west wall
+	return (game->map.texture.no);
 }
 
 mlx_texture_t	*get_east_wall_color(t_game *game)
 {
-	return (game->map.texture.no); // Color for the east wall
+	return (game->map.texture.no);
 }
 
 mlx_texture_t	*get_south_wall_color(t_game *game)
 {
-	return (game->map.texture.so); // Color for the south wall
+	return (game->map.texture.so);
 }
 
 mlx_texture_t	*get_north_wall_color(t_game *game)
 {
-	return (game->map.texture.so); // Color for the north wall
+	return (game->map.texture.so);
 }
 
 mlx_texture_t	*get_textures(t_game *game, int flag)
 {
-	game->ray.ray_ngl = nor_angle(game->ray.ray_ngl); // Normalize the angle
+	game->ray.ray_ngl = nor_angle(game->ray.ray_ngl);
 	if (flag == 0)
 	{
 		if (game->ray.ray_ngl > M_PI / 2 && game->ray.ray_ngl < 3 * (M_PI / 2))

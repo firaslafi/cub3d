@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 09:29:06 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/03/27 14:06:43 by flafi            ###   ########.fr       */
+/*   Updated: 2024/03/30 23:18:45 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,8 @@ typedef struct s_game{
 ////                     utils                  /////
 /////////////////////////////////////////////////////
 
+mlx_texture_t	*get_textures(t_game *game, int flag);
+float	nor_angle(float angle);
 
 
 #endif

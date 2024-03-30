@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:47:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/27 14:07:01 by flafi            ###   ########.fr       */
+/*   Updated: 2024/03/30 23:13:43 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,44 +197,7 @@ void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix)
 		my_mlx_pixel_put(game, ray, i++, 0xB99470FF);
 }
 
-mlx_texture_t	*get_west_wall_color(t_game *game)
-{
-	return (game->map.texture.no);
-}
 
-mlx_texture_t	*get_east_wall_color(t_game *game)
-{
-	return (game->map.texture.no);
-}
-
-mlx_texture_t	*get_south_wall_color(t_game *game)
-{
-	return (game->map.texture.so);
-}
-
-mlx_texture_t	*get_north_wall_color(t_game *game)
-{
-	return (game->map.texture.so);
-}
-
-mlx_texture_t	*get_textures(t_game *game, int flag)
-{
-	game->ray.ray_ngl = nor_angle(game->ray.ray_ngl);
-	if (flag == 0)
-	{
-		if (game->ray.ray_ngl > M_PI / 2 && game->ray.ray_ngl < 3 * (M_PI / 2))
-			return (get_west_wall_color(game));
-		else
-			return (get_east_wall_color(game));
-	}
-	else
-	{
-		if (game->ray.ray_ngl > 0 && game->ray.ray_ngl < M_PI)
-			return (get_south_wall_color(game));
-		else
-			return (get_north_wall_color(game));
-	}
-}
 // calculate X of the texture based on the player's position and wall distance
 double	get_x_o(mlx_texture_t *texture, t_game *game, double wall_distance)
 {

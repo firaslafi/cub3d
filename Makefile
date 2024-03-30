@@ -32,7 +32,7 @@ INCFLAGS		=	-I./include \
 
 # FILES #
 
-SRCS		=	$(SRC_DIR)/main01.c \
+SRCS		=	$(SRC_DIR)/main01.c $(SRC_DIR)/get_textures.c \
 				$(foreach dir, $(SUB_DIRS), $(wildcard $(SRC_DIR)/$(dir)/*.c))
 OBJS		=	$(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 DEPS		=	$(OBJS:.o=.d)

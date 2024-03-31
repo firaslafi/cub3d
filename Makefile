@@ -32,7 +32,7 @@ INCFLAGS		=	-I./include \
 
 # FILES #
 
-SRCS		=	$(SRC_DIR)/main01.c $(SRC_DIR)/get_textures.c $(SRC_DIR)/movement.c $(SRC_DIR)/movement_utils.c $(SRC_DIR)/movement2.c\
+SRCS		=	$(SRC_DIR)/main01.c $(SRC_DIR)/get_textures.c $(SRC_DIR)/movement.c $(SRC_DIR)/movement_utils.c $(SRC_DIR)/movement2.c $(SRC_DIR)/raycast.c $(SRC_DIR)/intersection.c $(SRC_DIR)/render.c\
 				$(foreach dir, $(SUB_DIRS), $(wildcard $(SRC_DIR)/$(dir)/*.c))
 OBJS		=	$(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 DEPS		=	$(OBJS:.o=.d)

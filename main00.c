@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main00.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:47:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/13 22:30:55 by flafi            ###   ########.fr       */
+/*   Updated: 2024/03/31 22:11:05 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ void hook(t_mlx *mlx, double move_x, double move_y) {
 //#####################################################################################//
 
 
-void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color) {
+void ref_mlx_pixel_put(t_mlx *mlx, int x, int y, int color) {
     if (x < 0) // Check if x position is out of bounds
         x = 0;
     else if (x >= S_W)
@@ -280,10 +280,10 @@ void	draw_floor_ceiling(t_mlx *mlx, int ray, int t_pix, int b_pix)	// draw the f
 
 	i = b_pix;
 	while (i < S_H)
-		my_mlx_pixel_put(mlx, ray, i++, 0x005C4033); // floor
+		ref_mlx_pixel_put(mlx, ray, i++, 0x005C4033); // floor
 	i = 0;
 	while (i < t_pix)
-		my_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // ceiling
+		ref_mlx_pixel_put(mlx, ray, i++, 0xB99470FF); // ceiling
 }
     
 mlx_texture_t *get_west_wall_color(t_mlx *mlx) {
@@ -365,7 +365,7 @@ void draw_wall(t_mlx *mlx, int t_pix, int b_pix, double wall_h)
         y_o = 0;
     while (t_pix < b_pix)
     {
-        my_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
+        ref_mlx_pixel_put(mlx, mlx->ray->index, t_pix, reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
         y_o += factor;
         t_pix++;
     }

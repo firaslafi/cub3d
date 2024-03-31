@@ -206,7 +206,7 @@ void	hook(t_game *game, double move_x, double move_y)
 
 //############################## THE WALL RENDERING CODE ##############################//
 
-void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
+void	ref_mlx_pixel_put(t_game *game, int x, int y, int color)
 {
 	if (x < 0) // Check if x position is out of bounds
 		x = 0;
@@ -236,10 +236,10 @@ void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix)
 
 	i = b_pix;
 	while (i < S_H)
-		my_mlx_pixel_put(game, ray, i++, 0x005C4033); // floor
+		ref_mlx_pixel_put(game, ray, i++, 0x005C4033); // floor
 	i = 0;
 	while (i < t_pix)
-		my_mlx_pixel_put(game, ray, i++, 0xB99470FF); // ceiling
+		ref_mlx_pixel_put(game, ray, i++, 0xB99470FF); // ceiling
 }
 
 mlx_texture_t	*get_west_wall_color(t_game *game)
@@ -328,7 +328,7 @@ void	draw_wall(t_game *game, int t_pix, int b_pix, double wall_h)
 		y_o = 0;
 	while (t_pix < b_pix)
 	{
-		my_mlx_pixel_put(game, game->ray.index, t_pix,
+		ref_mlx_pixel_put(game, game->ray.index, t_pix,
 			reverse_bytes(arr[(int)y_o * texture->width + (int)x_o]));
 		y_o += factor;
 		t_pix++;

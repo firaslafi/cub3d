@@ -169,6 +169,18 @@ void	move_right(t_game *game, double *move_x, double *move_y);
 void	move_left(t_game *game, double *move_x, double *move_y);
 void	move_up(t_game *game, double *move_x, double *move_y);
 void	move_down(t_game *game, double *move_x, double *move_y);
-
-
+void	cast_rays(t_game *game);
+float	get_v_inter(t_game *game, float angl);
+float	get_h_inter(t_game *game, float angl);
+void	render_wall(t_game *game, int ray);
+int	unit_circle(float angle, char c);
+int	inter_check(float angle, float *inter, float *step, int is_horizon);
+int	wall_hit(float x, float y, t_game *game);
+double	calculate_wall_height(double distance, double tan_val);
+double	adjust_distance(double distance, double cos_val);
+void	draw_wall(t_game *game, int t_pix, int b_pix, double wall_h);
+void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix);
+uint32_t	rev_byte(uint32_t c);
+double	get_x_pos(mlx_texture_t *texture, t_game *game, double wall_distance);
+void	ref_mlx_pixel_put(t_game *game, int x, int y, int color);
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movement_utils.c                                   :+:      :+:    :+:   */
+/*   movement2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 14:40:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/31 14:40:49 by flafi            ###   ########.fr       */
+/*   Created: 2024/03/31 21:42:25 by flafi             #+#    #+#             */
+/*   Updated: 2024/03/31 21:42:25 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,43 +22,49 @@ void	adjust_angle(double *angle)
 }
 
 // checks for wall collisions
-int is_valid_move(const t_game *game, int new_x, int new_y)
+int	is_valid_move(const t_game *game, int new_x, int new_y)
 {
-    int map_grid_x = (int)(new_x * inv_TILE_SIZE);
-    int map_grid_y = (int)(new_y * inv_TILE_SIZE);
-    
-    return (game->map.grid[map_grid_y][map_grid_x] != '1'
-        && game->map.grid[(int)(new_y * inv_TILE_SIZE)][(int)(new_x * inv_TILE_SIZE)] != '1');
+	int	map_grid_x;
+	int	map_grid_y;
+
+	map_grid_x = (int)(new_x * inv_TILE_SIZE);
+	map_grid_y = (int)(new_y * inv_TILE_SIZE);
+	return (game->map.grid[map_grid_y][map_grid_x] != '1'
+		&& game->map.grid[(int)(new_y * inv_TILE_SIZE)][(int)(new_x
+			* inv_TILE_SIZE)] != '1');
 }
 
 // move the player and checks for wall collisions
-void move_player(t_game *game, double move_x, double move_y)
+void	move_player(t_game *game, double move_x, double move_y)
 {
-    int new_x = round(game->ply.plyr_x + move_x);
-    int new_y = round(game->ply.plyr_y + move_y);
-    
-    if (is_valid_move(game, new_x, new_y)) {
-        game->ply.plyr_x = new_x;
-        game->ply.plyr_y = new_y;
-    }
+	int	new_x;
+	int	new_y;
+
+	new_x = round(game->ply.plyr_x + move_x);
+	new_y = round(game->ply.plyr_y + move_y);
+	if (is_valid_move(game, new_x, new_y))
+	{
+		game->ply.plyr_x = new_x;
+		game->ply.plyr_y = new_y;
+	}
 }
 
 // Main function to hook the player
 void	hook(t_game *game, double move_x, double move_y)
 {
-	move_x = 0; // Reset movement variables
+	move_x = 0;
 	move_y = 0;
-	if (game->ply.rot == 1) // rotate right
+	if (game->ply.rot == 1)
 		rotate_player(game, 1);
-	else if (game->ply.rot == -1) // rotate left
+	else if (game->ply.rot == -1)
 		rotate_player(game, 0);
-	if (game->ply.l_r == 1) // move right
+	if (game->ply.l_r == 1)
 		move_right(game, &move_x, &move_y);
-	else if (game->ply.l_r == -1) // move left
+	else if (game->ply.l_r == -1)
 		move_left(game, &move_x, &move_y);
-	if (game->ply.u_d == 1) // move up
+	if (game->ply.u_d == 1)
 		move_up(game, &move_x, &move_y);
-	else if (game->ply.u_d == -1) // move down
+	else if (game->ply.u_d == -1)
 		move_down(game, &move_x, &move_y);
-	move_player(game, move_x, move_y); // move the player
+	move_player(game, move_x, move_y);
 }

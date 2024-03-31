@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   cub_3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 09:29:06 by nnavidd           #+#    #+#             */
-/*   Updated: 2024/03/30 23:18:45 by flafi            ###   ########.fr       */
+/*   Created: 2024/03/31 14:26:06 by flafi             #+#    #+#             */
+/*   Updated: 2024/03/31 14:26:06 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef CUB_3D_H
 # define CUB_3D_H
@@ -21,7 +20,6 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
-# include <sys/wait.h>
 # include <limits.h>
 # ifdef __linux__
 	# include <X11/X.h>
@@ -55,8 +53,8 @@
 typedef struct s_parse t_parse;
 
 
-// # define MAX_WIDTH  1024
-// # define MAX_HEIGHT 1024
+# define	 S_W 800
+# define S_H 600
 # define WIN_WIDTH  1900
 # define WIN_HEIGHT 1000
 # define DOT_SIZE	10
@@ -163,6 +161,14 @@ typedef struct s_game{
 
 mlx_texture_t	*get_textures(t_game *game, int flag);
 float	nor_angle(float angle);
+void	rotate_player(t_game *game, int i);
+void	adjust_angle(double *angle);
+void	move_player(t_game *game, double move_x, double move_y);
+void	hook(t_game *game, double move_x, double move_y);
+void	move_right(t_game *game, double *move_x, double *move_y);
+void	move_left(t_game *game, double *move_x, double *move_y);
+void	move_up(t_game *game, double *move_x, double *move_y);
+void	move_down(t_game *game, double *move_x, double *move_y);
 
 
 #endif

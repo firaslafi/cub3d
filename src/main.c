@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 10:47:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/26 02:55:47 by flafi            ###   ########.fr       */
+/*   Created: 2024/03/31 14:26:22 by flafi             #+#    #+#             */
+/*   Updated: 2024/03/31 14:26:22 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
 #include "../libs/MLX42/include/MLX42/MLX42.h"
 #include "../libs/libft/libft/libft.h"
-// #include "./main.h"
 #include "../include/cub_3d.h"
 #include <fcntl.h>
 #include <stdio.h>

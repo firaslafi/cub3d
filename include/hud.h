@@ -29,8 +29,9 @@ typedef struct s_pos t_pos;
 /*****************hud_main.c********************/
 bool    mini_map(t_game *game);
 bool    draw_minimap(t_game *game);
+void	move_minimap_player(t_game *game, int direction);
 void    fill_map_circle(t_game	*game);
 bool	mlx_initiate(t_game	*game);
-void    mlx_key(mlx_key_data_t keydata, void* param);
+void    mlx_minimap_key(mlx_key_data_t keydata, void* param);
 void    pad_map_lines(char **map, uint32_t map_height, uint32_t longest_line, uint32_t *line_lengths);
 #endif

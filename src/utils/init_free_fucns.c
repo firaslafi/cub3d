@@ -106,7 +106,7 @@ void	initiate_ray(t_game *game)
 void	initiate_hud(t_game *game)
 {
 	game->hud.map = NULL;
-	game->hud.pos = (t_pos){0,0};
+	game->hud.pos = NULL;
 	game->hud.circle = NULL;
 	game->hud.circle_bck = NULL;
 	game->hud.img_ci_bck = NULL;
@@ -146,18 +146,6 @@ void	free_array(char **map)
 	map = NULL;	
 }
 
-// void	free_parser(t_parse *parser)
-// {
-// 	if (parser != NULL)
-// 	{
-// 		if (parser->line)
-// 			free(parser->line);
-// 		if (parser->split != NULL)
-// 			free_array(parser->split);
-// 		// free(parser->game);
-// 		free(parser);
-// 	}
-// }
 void	free_texture(mlx_texture_t *texture)
 {
 	if (texture)
@@ -237,10 +225,6 @@ void	close_game(t_game *game)
 		free_hud(game);
 		free_raycast(&game->ray);
 		free_mlx(game);
-		// if (game->parser != NULL)
-			// free(game->parser);
-		// game->parser = NULL;
-		// free(game);
 		game = NULL;
 		exit(EXIT_SUCCESS);
 	}

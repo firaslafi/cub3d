@@ -15,13 +15,16 @@
 
 # include "../include/cub_3d.h"
 
+# define S_W 1900 // screen width
+# define S_H 1000 // screen height
+
+
 typedef struct s_map t_map;
 typedef struct s_game t_game;
 typedef struct s_pos t_pos;
 
 
 /*****************raycast_main.c********************/
-// void	start_the_game(t_game *game);	// start the game
-
+void	raycast(t_game *game);
 
 #endif

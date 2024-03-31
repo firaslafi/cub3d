@@ -120,7 +120,7 @@ typedef struct s_scene{
 
 typedef struct s_hud{
 	char			**map;
-	t_pos			pos;
+	t_pos			*pos;
 	mlx_image_t		*circle;
 	mlx_image_t		*circle_bck;
 	mlx_image_t		*img_ci_bck;

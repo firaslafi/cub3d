@@ -142,10 +142,6 @@ bool	check_texture_file_path(char *path)
 	close(fd);
 	return (false);
 }
-// (fd = open(map->no_xpm, O_RDONLY)) > 0)
-// (fd = open(map->so_xpm, O_RDONLY)) > 0)
-// (fd = open(map->ea_xpm, O_RDONLY)) > 0)
-// (fd = open(map->we_xpm, O_RDONLY)) > 0)
 
 bool check_element(t_parse *parser)
 {
@@ -218,11 +214,6 @@ bool	assessment_map(t_game *game)
 	check_map_path(game);
 	return (true);
 }
-
-// (fd = open(map->no_xpm, O_RDONLY) < 0
-// (fd = open(map->so_xpm, O_RDONLY) < 0)
-// (fd = open(map->ea_xpm, O_RDONLY) < 0)
-// (fd = open(map->we_xpm, O_RDONLY) < 0)
 
 bool assessment_element(t_game *game, int err)
 {

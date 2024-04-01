@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:00:53 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/31 22:27:18 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/02 01:51:55 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	draw_wall(t_game *game, int top_pix, int bot_pix, double wall_h)
 		ref_mlx_pixel_put(game, game->ray.index, top_pix,
 			rev_byte(array[(int)y_pos * texture->width + (int)x_pos]));
 		y_pos = y_pos + factor;
-		top_pix++;
+		top_pix += 1;
 	}
 }
 

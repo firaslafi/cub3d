@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 21:55:59 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/31 21:56:34 by flafi            ###   ########.fr       */
+/*   Created: 2024/04/02 01:51:25 by flafi             #+#    #+#             */
+/*   Updated: 2024/04/02 01:51:27 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,58 +25,51 @@ void	adjust_y_step(float *y_step, float angl)
 		*y_step *= -1;
 }
 
-void	move_to_next_intersection(float *v_x, float *v_y, float *x_step,
-		float *y_step, t_game *game, int pixel)
-{
-	while (wall_hit(*v_x - pixel, *v_y, game))
-	{
-		*v_x += *x_step;
-		*v_y += *y_step;
-	}
-}
 float	get_h_inter(t_game *game, float angl)
 {
-	int		pixel;
-	float	delta_x;
-	float	delta_y;
+	t_vars	vars;
 
-	float h_x, h_y, x_step, y_step;
-	y_step = TILE_SIZE;
-	x_step = TILE_SIZE / tan(angl);
-	h_y = floor(game->ply.plyr_y / TILE_SIZE) * TILE_SIZE;
-	pixel = inter_check(angl, &h_y, &y_step, 1);
-	h_x = game->ply.plyr_x + (h_y - game->ply.plyr_y) / tan(angl);
-	if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y')
-			&& x_step < 0))
-		x_step *= -1;
-	while (1)
+	vars.y_step = TILE_SIZE;
+	vars.x_step = TILE_SIZE / tan(angl);
+	vars.vt_y = floor(game->ply.plyr_y / TILE_SIZE) * TILE_SIZE;
+	vars.pixel = intersek_chck(angl, &vars.vt_y, &vars.y_step, 1);
+	vars.vt_x = game->ply.plyr_x + (vars.vt_y - game->ply.plyr_y) / tan(angl);
+	if ((unit_circle(angl, 'y') && vars.x_step > 0) || (!unit_circle(angl, 'y')
+			&& vars.x_step < 0))
+		vars.x_step *= -1;
+	while (wall_hit(vars.vt_x, vars.vt_y - vars.pixel, game))
 	{
-		if (!wall_hit(h_x, h_y - pixel, game))
-			break ;
-		h_x += x_step;
-		h_y += y_step;
+		vars.vt_x += vars.x_step;
+		vars.vt_y += vars.y_step;
 	}
-	delta_x = h_x - game->ply.plyr_x;
-	delta_y = h_y - game->ply.plyr_y;
-	return (sqrt(delta_x * delta_x + delta_y * delta_y));
+	return (sqrt(pow(vars.vt_x - game->ply.plyr_x, 2) + pow(vars.vt_y
+				- game->ply.plyr_y, 2)));
+}
+
+void	move_to_next_intersection(t_intersection *inter, t_game *game)
+{
+	while (wall_hit(*(inter->v_x) - inter->pixel, *(inter->v_y), game))
+	{
+		*(inter->v_x) += *(inter->x_step);
+		*(inter->v_y) += *(inter->y_step);
+	}
 }
 
 float	get_v_inter(t_game *game, float angl)
 {
-	float	vt_x;
-	float	vt_y;
-	float	x_step;
-	float	y_step;
-	int		pixel;
+	t_vars			vars;
+	t_intersection	inter;
 
-	x_step = TILE_SIZE;
-	y_step = TILE_SIZE * tan(angl);
-	vt_x = floor(game->ply.plyr_x / TILE_SIZE) * TILE_SIZE;
-	pixel = inter_check(angl, &vt_x, &x_step, 0);
-	vt_y = game->ply.plyr_y + (vt_x - game->ply.plyr_x) * tan(angl);
-	adjust_y_step(&y_step, angl);
-	move_to_next_intersection(&vt_x, &vt_y, &x_step, &y_step, game, pixel);
-	game->ray.vert_x = vt_x;
-	game->ray.vert_y = vt_y;
-	return (calculate_distance(vt_x, vt_y, game->ply.plyr_x, game->ply.plyr_y));
+	vars.x_step = TILE_SIZE;
+	vars.y_step = TILE_SIZE * tan(angl);
+	vars.vt_x = floor(game->ply.plyr_x / TILE_SIZE) * TILE_SIZE;
+	vars.pixel = intersek_chck(angl, &vars.vt_x, &vars.x_step, 0);
+	vars.vt_y = game->ply.plyr_y + (vars.vt_x - game->ply.plyr_x) * tan(angl);
+	adjust_y_step(&vars.y_step, angl);
+	inter = init_intersection(&vars);
+	move_to_next_intersection(&inter, game);
+	game->ray.vert_x = vars.vt_x;
+	game->ray.vert_y = vars.vt_y;
+	return (calculate_distance(vars.vt_x, vars.vt_y, game->ply.plyr_x,
+			game->ply.plyr_y));
 }

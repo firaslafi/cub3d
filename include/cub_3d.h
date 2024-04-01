@@ -61,6 +61,24 @@ typedef struct s_parse t_parse;
 
 static const double inv_TILE_SIZE = 1.0 / TILE_SIZE;
 
+typedef struct s_intersection
+{
+    float *v_x;
+    float *v_y;
+    float *x_step;
+    float *y_step;
+    int pixel;
+} t_intersection;
+
+typedef struct s_vars
+{
+    float vt_x;
+    float vt_y;
+    float x_step;
+    float y_step;
+    int pixel;
+} t_vars;
+
 typedef struct s_tex
 {
 	mlx_texture_t	*no;
@@ -174,7 +192,7 @@ float	get_v_inter(t_game *game, float angl);
 float	get_h_inter(t_game *game, float angl);
 void	render_wall(t_game *game, int ray);
 int	unit_circle(float angle, char c);
-int	inter_check(float angle, float *inter, float *step, int is_horizon);
+int	intersek_chck(float angle, float *inter, float *step, int is_horizon);
 int	wall_hit(float x, float y, t_game *game);
 double	calculate_wall_height(double distance, double tan_val);
 double	adjust_distance(double distance, double cos_val);
@@ -183,4 +201,5 @@ void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix);
 uint32_t	rev_byte(uint32_t c);
 double	get_x_pos(mlx_texture_t *texture, t_game *game, double wall_distance);
 void	ref_mlx_pixel_put(t_game *game, int x, int y, int color);
+t_intersection	init_intersection(t_vars *vars);
 #endif

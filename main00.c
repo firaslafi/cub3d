@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:47:49 by flafi             #+#    #+#             */
-/*   Updated: 2024/03/31 22:11:05 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/02 00:12:12 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,7 +415,7 @@ int	unit_circle(float angle, char c)	// check the unit circle
 	return (0);
 }
 
-int inter_check(float angle, float *inter, float *step, int is_horizon) { // check the intersection
+int intersek_chck(float angle, float *inter, float *step, int is_horizon) { // check the intersection
     if (is_horizon) {
         if (angle > 0 && angle < M_PI) {
             *inter += TILE_SIZE;
@@ -455,7 +455,7 @@ float get_h_inter(t_mlx *mlx, float angl) {
     y_step = TILE_SIZE;
     x_step = TILE_SIZE / tan(angl);
     h_y = floor(mlx->ply->plyr_y / TILE_SIZE) * TILE_SIZE;
-    pixel = inter_check(angl, &h_y, &y_step, 1);
+    pixel = intersek_chck(angl, &h_y, &y_step, 1);
     h_x = mlx->ply->plyr_x + (h_y - mlx->ply->plyr_y) / tan(angl);
     
     if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y') && x_step < 0))
@@ -501,7 +501,7 @@ float get_v_inter(t_mlx *mlx, float angl) {
     x_step = TILE_SIZE;
     y_step = TILE_SIZE * tan(angl);
     v_x = floor(mlx->ply->plyr_x / TILE_SIZE) * TILE_SIZE;
-    pixel = inter_check(angl, &v_x, &x_step, 0);
+    pixel = intersek_chck(angl, &v_x, &x_step, 0);
     v_y = mlx->ply->plyr_y + (v_x - mlx->ply->plyr_x) * tan(angl);
 
     adjust_y_step(&y_step, angl);

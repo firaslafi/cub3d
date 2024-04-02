@@ -51,7 +51,7 @@ int	main(int ac, char **av) // main function
 
 	if (checking_map(ac, av, &game))
 		return (EXIT_FAILURE);
-	print_map_details(&game);
+	// print_map_details(&game);
 	start_the_game(&game); // start the game
 	return (close_game(&game), EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_format.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/04 22:34:53 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/02 23:58:50 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ uint32_t *ft_realloc_int(uint32_t *input, size_t old_count, size_t new_count)
 	while (++i < old_count)
 		new_ptr[i] = input[i];
 	free(input);
-	return new_ptr; // Return the new memory block
+	return new_ptr;
 }
 
 char	**ft_realloc_strings(char **ptr, size_t old_count, size_t new_count)
@@ -113,7 +113,6 @@ size_t list_len(uint32_t *arr)
 int read_map(t_game *game)
 {
 	
-	// (void)parser;
 	t_map	*map;
 
 	map = game->parser.map;
@@ -141,10 +140,6 @@ bool	check_texture_file_path(char *path)
 	close(fd);
 	return (false);
 }
-// (fd = open(map->no_xpm, O_RDONLY)) > 0)
-// (fd = open(map->so_xpm, O_RDONLY)) > 0)
-// (fd = open(map->ea_xpm, O_RDONLY)) > 0)
-// (fd = open(map->we_xpm, O_RDONLY)) > 0)
 
 bool check_element(t_parse *parser)
 {
@@ -160,10 +155,8 @@ bool check_element(t_parse *parser)
 		(map->ceiling_color[02] != -1)) && ((map->floor_color[0] != -1) &&
 		(map->floor_color[1] != -1) && (map->floor_color[2] != -1)))
 		{
-			// printf("check element is true line is: %s\n", parser->line);
 			return ( true);
 		}
-	// printf("check element is false\n");
 	return (false);
 }
 
@@ -202,26 +195,17 @@ int	calc_map_rows_widths(t_map *map)
 			longest = map->widths[i];
 	}
 	map->max_width = longest;
-	// for (uint32_t i = 0; i < map->map_height; i++)
-	// 	printf("line[%d]: length:[%d]	|%s|\n", i, map->widths[i], map->grid[i]);
-	// printf(GREEN"longest line is: "RESET RED"%d\n"RESET, map->max_width);
 	return (0);
 }
 
 
 bool	assessment_map(t_game *game)
 {
-	// printf("hight:%d, line[%d]:%s\n", m->map_height, m->map_height, m->grid[m->map_height]);
 	calc_map_rows_widths(&game->map);
 	check_map_char(game);
 	check_map_path(game);
 	return (true);
 }
-
-// (fd = open(map->no_xpm, O_RDONLY) < 0
-// (fd = open(map->so_xpm, O_RDONLY) < 0)
-// (fd = open(map->ea_xpm, O_RDONLY) < 0)
-// (fd = open(map->we_xpm, O_RDONLY) < 0)
 
 bool assessment_element(t_game *game, int err)
 {
@@ -275,10 +259,8 @@ int	check_digit(char  *color)
 		return (-1);
 	if (ft_atoi(color) < 0 || ft_atoi(color) > 255)
 	{
-		// printf("is not a in a range:%d\n", ft_atoi(color));
 		return (-1);
 	}
-	// printf("the color num:%d\n", ft_atoi(color));
 	return (ft_atoi(color));
 }
 
@@ -351,8 +333,6 @@ int extract_rgb(t_parse *parser)
 	if (ft_strcountchr(parser->split[1], ',') > 2)
 		return (finish(parser->game, "Wrong rgb format!!!", NOSYSERR));
 	rgb = ft_split(parser->split[1], ',');
-	// for (int  i =  0; rgb[i]; i++)
-	// 	printf("rgb[%d]:%s\n", i, rgb[i]);
 	if (array_length(rgb) != 3)
 		return (free_array(rgb), 1);
 	if (!ft_strcmp(parser->split[0], "F"))
@@ -373,13 +353,10 @@ int extract_rgb(t_parse *parser)
 int	read_element(t_parse *parser)
 {
 	
-	// printf(RED"no_file:%s\n"RESET, parser->map->no_xpm);
 	parser->split = ft_split(parser->line, ' ');
 	for (int j = 0; parser->split[j] != NULL; j++)
 		str_trim(parser->split[j], '\t');
 	parser->split = rm_empty_array_elements(parser->split);
-	// for(int i = 0; parser->split[i]; i++)
-	// 			printf("\ts[%d]:%s.\n", i, parser->split[i]);
 	if (array_length(parser->split) != 2)
 		return (free_array(parser->split), 1);
 	if (ft_strcmp(parser->split[0] ,"NO") == 0)
@@ -393,8 +370,6 @@ int	read_element(t_parse *parser)
 	else if (ft_strcmp(parser->split[0], "F") == 0 || 
 				ft_strcmp(parser->split[0], "C") == 0)
 		extract_rgb(parser);
-			
-	
 	return (free_array(parser->split), 0);
 }
 

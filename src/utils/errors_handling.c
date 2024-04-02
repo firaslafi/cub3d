@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_handling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:17:56 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/03 18:32:35 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:15:04 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	finish(t_game *game, char *msg, int type)
 		ft_putstr_fd("\033[38;5;214mHiii\033[0m, there is an error:--> "RED, 2);
 		ft_putstr_fd(msg, 2);
 		ft_putstr_fd("\n"RESET, 2);
-		// ft_putstr_fd(error_table(error), 2);
 	}
 	if (type == SYSERR)
 	{

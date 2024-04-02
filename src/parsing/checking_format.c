@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/02 23:58:50 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/03 01:09:33 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ bool	check_texture_file_path(char *path)
 
 bool check_element(t_parse *parser)
 {
-	// int		fd;
 	t_map	*map;
 	
 	map = parser->map;

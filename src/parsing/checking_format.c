@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/03 01:09:33 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/03 01:17:18 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	array_length(char **array)
 	i = 0;
 	if (array == NULL || !*array)
 		return (0);
-	while(array[i])
+	while (array[i])
 		i++;
 	return (i);
 }
@@ -33,10 +33,10 @@ bool	all_chr_present(char *s1, const char *s2)
 	while (s1[i])
 	{
 		j = 0;
-		while(s2[j])
+		while (s2[j])
 		{
 			if (s1[i] == s2[j])
-				break;
+				break ;
 			j++;
 		}
 		if (s1[i] != s2[j])
@@ -48,7 +48,7 @@ bool	all_chr_present(char *s1, const char *s2)
 
 /* This function reallocate an array of string from its old size to its
  new size.*/
-uint32_t *ft_realloc_int(uint32_t *input, size_t old_count, size_t new_count)
+uint32_t	*ft_realloc_int(uint32_t *input, size_t old_count, size_t new_count)
 {
 	uint32_t	*new_ptr;
 	size_t		i;
@@ -57,18 +57,18 @@ uint32_t *ft_realloc_int(uint32_t *input, size_t old_count, size_t new_count)
 	{
 		new_ptr = (uint32_t *)ft_calloc(new_count + 1, sizeof(uint32_t));
 		if (!new_ptr)
-			return NULL;
+			return (NULL);
 		return (new_ptr);
 	}
 
 	new_ptr = (uint32_t *)ft_calloc(new_count + 1, sizeof(uint32_t));
 	if (!new_ptr)
-		return (free(input),NULL);
+		return (free(input), NULL);
 	i = -1;
 	while (++i < old_count)
 		new_ptr[i] = input[i];
 	free(input);
-	return new_ptr;
+	return (new_ptr);
 }
 
 char	**ft_realloc_strings(char **ptr, size_t old_count, size_t new_count)
@@ -97,7 +97,7 @@ char	**ft_realloc_strings(char **ptr, size_t old_count, size_t new_count)
 	return (new_ptr);
 }
 
-size_t list_len(uint32_t *arr)
+size_t	list_len(uint32_t *arr)
 {
 	size_t	count;
 
@@ -110,9 +110,8 @@ size_t list_len(uint32_t *arr)
 	return (count);
 }
 
-int read_map(t_game *game)
+int	read_map(t_game *game)
 {
-	
 	t_map	*map;
 
 	map = game->parser.map;
@@ -127,6 +126,7 @@ int read_map(t_game *game)
 	map->grid[++map->map_height] = NULL;
 	return (0);
 }
+
 bool	check_texture_file_path(char *path)
 {
 	int	fd;
@@ -141,21 +141,21 @@ bool	check_texture_file_path(char *path)
 	return (false);
 }
 
-bool check_element(t_parse *parser)
+bool	check_element(t_parse *parser)
 {
-	t_map	*map;
-	
+	t_map *map;
+
 	map = parser->map;
-	if ((map->no_xpm && check_texture_file_path(map->no_xpm)) &&
-		(map->so_xpm && check_texture_file_path(map->so_xpm)) &&
-		(map->ea_xpm && check_texture_file_path(map->ea_xpm)) &&
-		(map->we_xpm && check_texture_file_path(map->we_xpm)) &&
-		((map->ceiling_color[0] != -1) && (map->ceiling_color[1] != -1) &&
-		(map->ceiling_color[02] != -1)) && ((map->floor_color[0] != -1) &&
-		(map->floor_color[1] != -1) && (map->floor_color[2] != -1)))
-		{
-			return ( true);
-		}
+	if ((map->no_xpm && check_texture_file_path(map->no_xpm)) && (map->so_xpm
+			&& check_texture_file_path(map->so_xpm)) && (map->ea_xpm
+			&& check_texture_file_path(map->ea_xpm)) && (map->we_xpm
+			&& check_texture_file_path(map->we_xpm))
+		&& ((map->ceiling_color[0] != -1) && (map->ceiling_color[1] != -1)
+			&& (map->ceiling_color[02] != -1)) && ((map->floor_color[0] != -1)
+			&& (map->floor_color[1] != -1) && (map->floor_color[2] != -1)))
+	{
+		return (true);
+	}
 	return (false);
 }
 
@@ -244,7 +244,6 @@ bool is_numeric(const char *str)
 	{
 		if (str[i] < '0' || str[i] > '9')
 		{
-			// printf("string color:%s\n", str);
 			return (false);
 		}
 		i++;
@@ -265,13 +264,13 @@ int	check_digit(char  *color)
 
 void str_trim(char *str, char ch)
 {
-	char *src;
-	char *dst;
+	char	*src;
+	char	*dst;
 
 	src = str;
 	dst = str;
 	if (str == NULL)
-		return;
+		return ;
 	while (*src != '\0')
 	{
 		if (*src != ch)
@@ -283,7 +282,7 @@ void str_trim(char *str, char ch)
 
 char **rm_empty_array_elements(char **str_array)
 {
-	int 	i;
+	int		i;
 	int		j;
 	char	**result;
 
@@ -296,7 +295,7 @@ char **rm_empty_array_elements(char **str_array)
 	}
 	result = (char **)malloc((i + 1) * sizeof(char *));
 	if (result == NULL)
-		return NULL;
+		return (NULL);
 	i = -1;
 	j = 0;
 	while (str_array[++i] != NULL)
@@ -312,7 +311,7 @@ char **rm_empty_array_elements(char **str_array)
 
 size_t	ft_strcountchr(char *str, char c)
 {
-	int	i;
+	int		i;
 	size_t	counter;
 
 	i = -1;
@@ -351,14 +350,19 @@ int extract_rgb(t_parse *parser)
 
 int	read_element(t_parse *parser)
 {
-	
+	int	j;
+
+	j = 0;
 	parser->split = ft_split(parser->line, ' ');
-	for (int j = 0; parser->split[j] != NULL; j++)
+	while (parser->split[j] != NULL)
+	{
 		str_trim(parser->split[j], '\t');
+		j++;
+	}
 	parser->split = rm_empty_array_elements(parser->split);
 	if (array_length(parser->split) != 2)
 		return (free_array(parser->split), 1);
-	if (ft_strcmp(parser->split[0] ,"NO") == 0)
+	if (ft_strcmp(parser->split[0], "NO") == 0)
 		parser->map->no_xpm = ft_strdup(parser->split[1]);
 	else if (ft_strcmp(parser->split[0], "SO") == 0)
 		parser->map->so_xpm = ft_strdup(parser->split[1]);
@@ -366,8 +370,8 @@ int	read_element(t_parse *parser)
 		parser->map->ea_xpm = ft_strdup(parser->split[1]);
 	else if (ft_strcmp(parser->split[0], "WE") == 0)
 		parser->map->we_xpm = ft_strdup(parser->split[1]);
-	else if (ft_strcmp(parser->split[0], "F") == 0 || 
-				ft_strcmp(parser->split[0], "C") == 0)
+	else if (ft_strcmp(parser->split[0], "F") == 0
+		|| ft_strcmp(parser->split[0], "C") == 0)
 		extract_rgb(parser);
 	return (free_array(parser->split), 0);
 }
@@ -387,8 +391,9 @@ bool	line_is_empty(char *line)
 
 int	fetch_map_detail(t_game *game)
 {
-	int li = 0;
-	
+	int li;
+
+	li = 0;
 	while ((game->parser.line = get_next_line(game->parser.fd)))
 	{
 		li++;
@@ -422,7 +427,7 @@ int	assessment_png_file(t_game *game)
 		return (finish(game, "East PNG file data worng!", NOSYSERR));
 	if ((game->map.texture.we = mlx_load_png(game->map.we_xpm)) == NULL)
 		return (finish(game, "West PNG file data worng!", NOSYSERR));
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 int	parsing_map(t_game *game)
@@ -431,7 +436,8 @@ int	parsing_map(t_game *game)
 	assessment_element(game, NOSYSERR);
 	assessment_png_file(game);
 	assessment_map(game);
-	pad_map_lines(game->map.grid, game->map.map_height, game->map.max_width, game->map.widths);
+	pad_map_lines(game->map.grid, game->map.map_height,
+		game->map.max_width, game->map.widths);
 	return (EXIT_SUCCESS);
 }
 
@@ -454,12 +460,13 @@ int	check_map_file_format_add(t_game *game, char *file)
 	while (file[i] != '\0' && str[j] != '\0')
 	{
 		if (file[i++] != str[j++])
-			return (free(str), finish(game, "Cub file format wrong!", NOSYSERR));
+			return (free(str),
+				finish(game, "Cub file format wrong!", NOSYSERR));
 	}
 	if (file[i] == '\0' && str[j] == '\0')
 		return (free(str), EXIT_SUCCESS);
 	else
-		return (free(str), finish(game, "Cub file format wrong!", NOSYSERR)); 
+		return (free(str), finish(game, "Cub file format wrong!", NOSYSERR));
 }
 
 int	checking_map(int ac, char **av, t_game *game)

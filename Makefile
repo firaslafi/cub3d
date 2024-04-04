@@ -57,7 +57,7 @@ endif
 $(LIBFT):
 	@echo "\033[38;5;214m-----Compiling the LIBFT files-----"
 	@if [ ! -d "$(LIBFT_DIR)" ]; then \
-		git submodule add -f https://github.com/nnavidd/Libft.git $(LIBFT_DIR); \
+		git submodule add -f https://github.com/firaslafi/cub3d_libft $(LIBFT_DIR); \
 	fi
 	@mkdir -p $(LIBFT_DIR)
 	@git submodule update --init --recursive --remote $(LIBFT_DIR)

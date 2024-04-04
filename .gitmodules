@@ -3,4 +3,4 @@
 	url = https://github.com/codam-coding-college/MLX42.git
 [submodule "libs/libft"]
 	path = libs/libft
-	url = https://github.com/nnavidd/Libft.git
+	url = https://github.com/firaslafi/cub3d_libft

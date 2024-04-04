@@ -53,8 +53,6 @@
 
 typedef struct s_parse	t_parse;
 
-# define inv_TILE_SIZE (1.0 / TILE_SIZE)
-
 typedef struct s_intersection
 {
 	float	*v_x;

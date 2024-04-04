@@ -24,14 +24,16 @@ void	adjust_angle(double *angle)
 // checks for wall collisions
 int	is_valid_move(const t_game *game, int new_x, int new_y)
 {
-	int	map_grid_x;
-	int	map_grid_y;
+	int		map_grid_x;
+	int		map_grid_y;
+	double	inv_tile_size;
 
-	map_grid_x = (int)(new_x * inv_TILE_SIZE);
-	map_grid_y = (int)(new_y * inv_TILE_SIZE);
+	inv_tile_size = 1.0 / TILE_SIZE;
+	map_grid_x = (int)(new_x * inv_tile_size);
+	map_grid_y = (int)(new_y * inv_tile_size);
 	return (game->map.grid[map_grid_y][map_grid_x] != '1'
-		&& game->map.grid[(int)(new_y * inv_TILE_SIZE)][(int)(new_x
-			* inv_TILE_SIZE)] != '1');
+		&& game->map.grid[(int)(new_y * inv_tile_size)][(int)(new_x
+			* inv_tile_size)] != '1');
 }
 
 // move the player and checks for wall collisions

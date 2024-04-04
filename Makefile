@@ -12,6 +12,7 @@ RM			=	rm
 SRC_DIR		=	src
 BUILD_DIR	=	build
 SUB_DIRS	=	parsing utils hud
+PARS_DIR	= $(SRC_DIR)/parsing
 
 LIBFT_DIR	=	libs/libft
 MLX_DIR		=	libs/MLX42
@@ -31,8 +32,8 @@ INCFLAGS		=	-I./include \
 					-I./$(MLX_DIR)/include/MLX42
 
 # FILES #
-
-SRCS		=	$(SRC_DIR)/main01.c \
+.SILENT:
+SRCS		=	$(SRC_DIR)/main01.c $(SRC_DIR)/get_textures.c $(SRC_DIR)/movement.c $(SRC_DIR)/movement_utils.c $(SRC_DIR)/movement2.c $(SRC_DIR)/raycast.c $(SRC_DIR)/intersection.c $(SRC_DIR)/render.c $(SRC_DIR)/calc_utils.c $(SRC_DIR)/render_utils.c $(SRC_DIR)/inter_utils.c\
 				$(foreach dir, $(SUB_DIRS), $(wildcard $(SRC_DIR)/$(dir)/*.c))
 OBJS		=	$(addprefix $(BUILD_DIR)/, $(SRCS:.c=.o))
 DEPS		=	$(OBJS:.o=.d)

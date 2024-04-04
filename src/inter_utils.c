@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.h                                          :+:      :+:    :+:   */
+/*   inter_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/29 10:02:39 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/03 00:49:29 by flafi            ###   ########.fr       */
+/*   Created: 2024/04/02 01:51:30 by flafi             #+#    #+#             */
+/*   Updated: 2024/04/02 01:51:32 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCAST_H
-# define RAYCAST_H
+#include "../include/cub_3d.h"
 
-# include "../include/cub_3d.h"
+t_intersection	init_intersection(t_vars *vars)
+{
+	t_intersection	inter;
 
-typedef struct s_map	t_map;
-typedef struct s_game	t_game;
-typedef struct s_pos	t_pos;
-
-#endif
+	inter.v_x = &vars->vt_x;
+	inter.v_y = &vars->vt_y;
+	inter.x_step = &vars->x_step;
+	inter.y_step = &vars->y_step;
+	inter.pixel = vars->pixel;
+	return (inter);
+}

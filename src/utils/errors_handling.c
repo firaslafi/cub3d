@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:17:56 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/03 00:15:04 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/04 01:53:15 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*error_table(char *code)
 	table[16] = "MTFAR\033[38;5;196mMap texture file has problem.\033[0m\n";
 	table[17] = "MCCIW\033[38;5;196mMap ceiling color wrong.\033[0m\n";
 	table[4] = "MFCIW\033[38;5;196mMap floor color wrong.\033[0m\n";
-	table[5] = "MALSW\033[38;5;196mMap lines are not in the same size.\033[0m\n";
+	table[5] = "MALSW\033[38;5;196mMap lines r nt in desame size.\033[0m\n";
 	table[6] = "MAEPW\033[38;5;196mExit/Player/collectable is wrong!\033[0m\n";
 	table[7] = "MACWR\033[38;5;196mWrong charactor in map.\033[0m\n";
 	table[8] = "MALOC\033[38;5;196musing malloc failed.\033[0m\n";
@@ -65,6 +65,5 @@ int	finish(t_game *game, char *msg, int type)
 		ft_putstr_fd("\n"RESET, 2);
 	}
 	close_game(game);
-	// system("leaks ./cub3D");
 	return (exit(EXIT_FAILURE), 1);
 }

@@ -6,39 +6,40 @@
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/03 00:22:02 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/04 01:59:15 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/utils.h"
 
-void print_map_details(t_game *game)
-{
-	if (game->map.no_xpm)
-		printf(RED"NO:"RESET"%s\n", game->map.no_xpm);
-	if (game->map.so_xpm)
-		printf(RED"SO:"RESET"%s\n", game->map.so_xpm);
-	if (game->map.ea_xpm)
-		printf(RED"EA:"RESET"%s\n", game->map.ea_xpm);
-	if (game->map.we_xpm)
-		printf(RED"WE:"RESET"%s\n", game->map.we_xpm);
-	if (game->map.ceiling_color[0])
-		printf(GREEN"Ceiling:"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
-		RESET"%d\n", game->map.ceiling_color[0], game->map.ceiling_color[1],
-			game->map.ceiling_color[2]);
-	if (game->map.floor_color[0])
-		printf(GREEN"Floor  :"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
-		RESET"%d\n", game->map.floor_color[0], game->map.floor_color[1],
-			game->map.floor_color[2]);
-	if (game->map.grid)
-	{
-		for(int i = 0; game->map.grid[i]; i++)
-			printf(GREEN"line[%d]: length:[%d]"RESET ORG"	|%s|\n", i, game->map.widths[i], game->map.grid[i]);
-	printf("longest line is: "RESET RED"%d\n"RESET, game->map.max_width);
-	printf(ORG"Player pos: x: "RESET RED"%d"RESET ORG" y: " RESET RED"%d\n"RESET, game->ply.pos.x, game->ply.pos.y);
-	}
-}
-
+// void print_map_details(t_game *game)
+// {
+// 	if (game->map.no_xpm)
+// 		printf(RED"NO:"RESET"%s\n", game->map.no_xpm);
+// 	if (game->map.so_xpm)
+// 		printf(RED"SO:"RESET"%s\n", game->map.so_xpm);
+// 	if (game->map.ea_xpm)
+// 		printf(RED"EA:"RESET"%s\n", game->map.ea_xpm);
+// 	if (game->map.we_xpm)
+// 		printf(RED"WE:"RESET"%s\n", game->map.we_xpm);
+// 	if (game->map.ceiling_color[0])
+// 		printf(GREEN"Ceiling:"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
+// 		RESET"%d\n", game->map.ceiling_color[0], game->map.ceiling_color[1],
+// 			game->map.ceiling_color[2]);
+// 	if (game->map.floor_color[0])
+// 		printf(GREEN"Floor  :"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
+// 		RESET"%d\n", game->map.floor_color[0], game->map.floor_color[1],
+// 			game->map.floor_color[2]);
+// 	if (game->map.grid)
+// 	{
+// 		for(int i = 0; game->map.grid[i]; i++)
+// 			printf(GREEN"line[%d]: length:[%d]"RESET ORG"	
+// |%s|\n", i, game->map.widths[i], game->map.grid[i]);
+// 	printf("longest line is: "RESET RED"%d\n"RESET, game->map.max_width);
+// 	printf(ORG"Player pos: x: "RESET RED"%d"RESET ORG" y: 
+// " RESET RED"%d\n"RESET, game->ply.pos.x, game->ply.pos.y);
+// 	}
+// }
 
 void	initiate_map(t_map *map)
 {
@@ -99,124 +100,4 @@ void	initiate_ray(t_game *game)
 	game->ray.vert_y = 0;
 	game->ray.distance = 0;
 	game->ray.flag = 0;
-}
-
-void	initiate_hud(t_game *game)
-{
-	game->hud.map = NULL;
-	game->hud.pos = (t_pos){0,0};
-	game->hud.circle = NULL;
-	game->hud.circle_bck = NULL;
-	game->hud.img_ci_bck = NULL;
-	game->hud.ply = NULL;
-	game->hud.img_ply = NULL;
-	game->hud.w_dot = NULL;
-	game->hud.b_dot = NULL;
-	game->hud.img_wall = NULL;
-	game->hud.ply_flag = 0;
-}
-
-void	initiate_game(t_game *game, char *file)
-{
-	initiate_map(&game->map);
-	initiate_parser(&game->parser, game, file);
-	initiate_player(game);
-	initiate_ray(game);
-	// initiate_hud(game);
-	game->scn.img = 0;
-	game->mlx = NULL;
-}
-
-void	free_array(char **map)
-{
-	int		i;
-
-	if (map == NULL)
-		return ;
-	i = 0;
-	while (map[i] != NULL)
-	{
-		free(map[i]);
-		map[i++] = NULL;
-	}
-	free(map);
-	map = NULL;	
-}
-
-void	free_texture(mlx_texture_t *texture)
-{
-	if (texture)
-		mlx_delete_texture(texture);
-	texture = NULL;
-}
-
-void	free_map(t_map *map)
-{
-	
-	if (map->no_xpm && map->no_xpm != NULL)
-		free(map->no_xpm);
-	if (map->no_xpm && map->so_xpm != NULL)
-		free(map->so_xpm);
-	if (map->ea_xpm && map->ea_xpm != NULL)
-		free(map->ea_xpm);
-	if (map->we_xpm && map->we_xpm != NULL)
-		free(map->we_xpm);
-	if (map->grid != NULL)
-		free_array(map->grid);
-	if (map->widths)
-		free(map->widths);
-	free_texture(map->texture.no);
-	free_texture(map->texture.so);
-	free_texture(map->texture.ea);
-	free_texture(map->texture.we);
-
-}
-
-void	free_image(mlx_t *mlx, mlx_image_t *image)
-{
-	if (image)
-		mlx_delete_image(mlx, image);
-	image = NULL;
-}
-
-
-void	free_hud(t_game *game)
-{
-	if (game->mlx)
-	{
-		free_image(game->mlx, game->hud.circle);
-		free_image(game->mlx, game->hud.circle_bck);
-		free_image(game->mlx, game->hud.img_ci_bck);
-		free_image(game->mlx, game->hud.img_ply);
-		free_image(game->mlx, game->hud.img_wall);
-	}
-}
-
-void	free_mlx(t_game *game)
-{
-	if (game->mlx != NULL)
-	{
-		mlx_delete_image(game->mlx, game->scn.img);
-		mlx_close_window(game->mlx);
-		free(game->mlx);
-		game->mlx = NULL;
-	}
-}
-
-void 	free_raycast(t_ray *ray)
-{
-	(void)ray;
-}
-
-void	close_game(t_game *game)
-{
-	if (game != NULL)
-	{
-		free_map(&game->map);
-		free_hud(game);
-		free_raycast(&game->ray);
-		free_mlx(game);
-		game = NULL;
-		exit(EXIT_SUCCESS);
-	}
 }

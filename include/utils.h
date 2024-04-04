@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 22:28:33 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/03 00:50:05 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/04 01:57:38 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,9 @@ int		finish(t_game *game, char *msg, int no);
 
 /**************print_map_details.c***************/
 void	print_map_details(t_game *game);
+
+void	free_map(t_map *map);
+void	initiate_ray(t_game *game);
+void	initiate_player(t_game *game);
 
 #endif

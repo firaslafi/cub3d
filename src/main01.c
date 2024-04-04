@@ -16,7 +16,7 @@
 	cast the rays put the image to the window*/
 void	game_loop(void *param)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)param;
 	mlx_delete_image(game->mlx, game->scn.img);
@@ -45,13 +45,12 @@ void	start_the_game(t_game *game)
 	mlx_loop(game->mlx);
 }
 
-int	main(int ac, char **av) // main function
+int	main(int ac, char **av)
 {
-	t_game game;
+	t_game	game;
 
 	if (checking_map(ac, av, &game))
 		return (EXIT_FAILURE);
-	// print_map_details(&game);
-	start_the_game(&game); // start the game
+	start_the_game(&game);
 	return (close_game(&game), EXIT_SUCCESS);
 }

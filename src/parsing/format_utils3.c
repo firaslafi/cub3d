@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 00:53:04 by flafi             #+#    #+#             */
-/*   Updated: 2024/04/04 00:53:13 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/04 01:49:47 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	assessment_map(t_game *game)
 	return (true);
 }
 
-bool assessment_element(t_game *game, int err)
+bool	assessment_element(t_game *game, int err)
 {
 	int		i;
 	t_map	*map;
@@ -43,13 +43,13 @@ bool assessment_element(t_game *game, int err)
 	i = 0;
 	while (map->floor_color[i])
 	{
-		if (map->floor_color[i++] == -1)	
+		if (map->floor_color[i++] == -1)
 			return (finish(game, "Floor color is wrong", err), false);
 	}
 	return (true);
 }
 
-bool is_numeric(const char *str)
+bool	is_numeric(const char *str)
 {
 	int	i;
 
@@ -65,7 +65,7 @@ bool is_numeric(const char *str)
 	return (true);
 }
 
-int	check_digit(char  *color)
+int	check_digit(char *color)
 {
 	if (!is_numeric(color))
 		return (-1);
@@ -76,7 +76,7 @@ int	check_digit(char  *color)
 	return (ft_atoi(color));
 }
 
-void str_trim(char *str, char ch)
+void	str_trim(char *str, char ch)
 {
 	char	*src;
 	char	*dst;

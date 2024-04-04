@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 01:51:12 by flafi             #+#    #+#             */
-/*   Updated: 2024/04/02 01:51:14 by flafi            ###   ########.fr       */
+/*   Updated: 2024/04/04 01:01:41 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,21 @@ void	ref_mlx_pixel_put(t_game *game, int x, int y, int color)
 
 int	rgb_to_rgba(int r, int g, int b, int a)
 {
-	int rgba = 0;
+	int	rgba;
+
+	rgba = 0;
 	rgba |= (r & 0xFF) << 24;
 	rgba |= (g & 0xFF) << 16;
 	rgba |= (b & 0xFF) << 8;
 	rgba |= (a & 0xFF);
 	return (rgba);
 }
+
 // draw the floor and the ceiling
 // ceiling is the 1st param
 void	draw_floor_ceiling(t_game *game, int ray, int t_pix, int b_pix)
 {
-	int i;
+	int	i;
 
 	i = b_pix;
 	while (i < S_H)

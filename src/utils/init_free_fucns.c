@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/06 10:35:11 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:57:05 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	close_game(t_game *game)
 	if (game != NULL)
 	{
 		free_map(&game->map);
-		free_hud(game);
+		// free_hud(game);
 		free_raycast(&game->ray);
 		free_mlx(game);
 		game = NULL;

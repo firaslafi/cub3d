@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hud.h                                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:02:29 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/06 06:10:06 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:57:03 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	start_the_game(t_game *game)	// start the game
 {
 	game->mlx = mlx_init(S_W, S_H, "Cub3D", 0);	// init the mlx pointer
-	mini_map(game);
-	raycast(game);
+	// mini_map(game);
+	raycasting_rendering(game);
 }
 
 int main(int ac, char **av)	// main function

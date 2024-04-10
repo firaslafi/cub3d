@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef CUB_3D_H
 # define CUB_3D_H
 
@@ -24,7 +23,7 @@
 # include <sys/wait.h>
 # include <limits.h>
 # ifdef __linux__
-	# include <X11/X.h>
+#  include <X11/X.h>
 # endif
 # include "../libs/MLX42/include/MLX42/MLX42.h"
 # include "../libs/libft/fts.h"
@@ -42,21 +41,16 @@
 # define SYSERR		0
 # define NOSYSERR	1
 # define MSG		2
-// # define WIDTH 256
-// # define HEIGHT 256
-#define MINIMAP_RADIUS 10
-#define MINIMAP_CENTER 130
+# define MINIMAP_RADIUS 10
+# define MINIMAP_CENTER 130
 
 # define TILE_SIZE 40 // tile size
 # define FOV 60 // field of view
 # define ROTATION_SPEED 0.08 // rotation speed
 # define PLAYER_SPEED 8	// player speed
 
-typedef struct s_parse t_parse;
+typedef struct s_parse	t_parse;
 
-
-// # define MAX_WIDTH  1024
-// # define MAX_HEIGHT 1024
 # define WIN_WIDTH  1900
 # define WIN_HEIGHT 1000
 # define DOT_SIZE	10
@@ -76,11 +70,9 @@ typedef struct s_map{
 	char		*so_xpm;
 	char		*we_xpm;
 	char		*ea_xpm;
-	// char		*sprite_texture;
 	int			floor_color[3];
 	char		**grid;
 	int			ceiling_color[3];
-	// uint32_t	map_width;
 	uint32_t	map_height;
 	uint32_t	max_width;
 	uint32_t	*widths;
@@ -88,14 +80,13 @@ typedef struct s_map{
 }		t_map;
 
 typedef struct s_parse{
-    
-    int     fd;
-    char    *line;
-    char    **split;
-    bool    map_part;
-    t_map   *map;
+	int		fd;
+	char	*line;
+	char	**split;
+	bool	map_part;
+	t_map	*map;
 	t_game	*game;
-} 		t_parse;
+}		t_parse;
 
 typedef struct s_pos{
 	uint32_t	x;
@@ -104,15 +95,14 @@ typedef struct s_pos{
 
 typedef struct s_player{
 	t_pos		pos;
-	int			plyr_x; // player x position in pixels
-	int			plyr_y; // player y position in pixels
-	double		angle;	// player angle
-	float		fov_rd;	// field of view in radians
-	int			rot;	// rotation flag
-	int			l_r;	// left right flag
-	int			u_d;	// up down flag
+	int			plyr_x;
+	int			plyr_y;
+	double		angle;
+	float		fov_rd;
+	int			rot;
+	int			l_r;
+	int			u_d;
 }		t_player;
-
 
 typedef struct s_scene{
 	mlx_image_t		*img;
@@ -133,7 +123,7 @@ typedef struct s_hud{
 	int				ply_flag;
 }	t_hud;
 
-typedef struct s_ray	//the ray structure
+typedef struct s_ray
 {
 	int		index;
 	double	ray_ngl;
@@ -141,8 +131,8 @@ typedef struct s_ray	//the ray structure
 	double	horiz_y;
 	double	vert_x;
 	double	vert_y;
-	double	distance;	// distance to the wall
-	int		flag;		// flag for the wall
+	double	distance;
+	int		flag;
 }	t_ray;
 
 typedef struct s_game{
@@ -155,11 +145,5 @@ typedef struct s_game{
 	mlx_t		*mlx;
 
 }		t_game;
-
-/////////////////////////////////////////////////////
-////                     utils                  /////
-/////////////////////////////////////////////////////
-
-
 
 #endif

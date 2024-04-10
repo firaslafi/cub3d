@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../include/cub_3d.h"
 #include "../include/raycast.h"
-
 
 // calculate X of the texture based on the player's position and wall distance
 double	get_x_pos(mlx_texture_t *texture, t_game *game, double wall_distance)

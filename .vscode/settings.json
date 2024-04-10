@@ -10,7 +10,8 @@
         "hud.h": "c",
         "raycast.h": "c",
         "stdio.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "cmath": "c"
     },
     "cmake.sourceDirectory": "/home/nnavidd/projects/Cub3D/libs/MLX42"
 }

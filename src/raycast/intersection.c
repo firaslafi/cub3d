@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../include/cub_3d.h"
 #include "../include/raycast.h"
-
 
 // get the vertical intersection
 float	calculate_distance(float v_x, float v_y, float plyr_x, float plyr_y)

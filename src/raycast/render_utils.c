@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../include/cub_3d.h"
 #include "../include/raycast.h"
-
 
 void	ref_mlx_pixel_put(t_game *game, int x, int y, int color)
 {

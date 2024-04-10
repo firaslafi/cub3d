@@ -205,7 +205,6 @@ int	calc_map_rows_widths(t_map *map)
 	return (0);
 }
 
-
 bool	assessment_map(t_game *game)
 {
 	// printf("hight:%d, line[%d]:%s\n", m->map_height, m->map_height, m->grid[m->map_height]);

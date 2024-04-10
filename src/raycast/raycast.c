@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../include/cub_3d.h"
 #include "../include/raycast.h"
-
 
 // cast the rays
 /* ray angle gets the starting angel and then we loop through the rays
@@ -74,9 +72,8 @@ void	init_the_player(t_game *game)
 // start the raycast, init player, run game loop and key hook
 void	raycasting_rendering(t_game *game)
 {
-	init_the_player(game);	// init the player structure
-	mlx_loop_hook(game->mlx, &game_loop, game);	// game loop
-	mlx_key_hook(game->mlx, &mlx_key, game);	// key press and release
-	mlx_loop(game->mlx);	// mlx loop
-
+	init_the_player(game);
+	mlx_loop_hook(game->mlx, &game_loop, game);
+	mlx_key_hook(game->mlx, &mlx_key, game);
+	mlx_loop(game->mlx);
 }

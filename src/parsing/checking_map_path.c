@@ -47,7 +47,6 @@ bool fill_grid(t_game *game, t_pos pos, char **grid)
 	if ((int)pos.y < 0 || pos.y >= game->map.map_height || \
 		(int)pos.x < 0 || pos.x >= game->map.widths[pos.y])
 	{
-		printf("hi p.xy:{%d, %d}\n", pos.x, pos.y);
 		return (finish(game, "Wrong path in Map!!!", NOSYSERR));
 	}
 	if (grid[pos.y][pos.x] == '1')

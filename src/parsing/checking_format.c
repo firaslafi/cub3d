@@ -199,15 +199,11 @@ int	calc_map_rows_widths(t_map *map)
 			longest = map->widths[i];
 	}
 	map->max_width = longest;
-	// for (uint32_t i = 0; i < map->map_height; i++)
-	// 	printf("line[%d]: length:[%d]	|%s|\n", i, map->widths[i], map->grid[i]);
-	// printf(GREEN"longest line is: "RESET RED"%d\n"RESET, map->max_width);
 	return (0);
 }
 
 bool	assessment_map(t_game *game)
 {
-	// printf("hight:%d, line[%d]:%s\n", m->map_height, m->map_height, m->grid[m->map_height]);
 	calc_map_rows_widths(&game->map);
 	check_map_char(game);
 	check_map_path(game);

@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 22:28:33 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/03 18:32:35 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:37:41 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ typedef struct s_map	t_map;
 
 /**************init_free_funcs.c***************/
 
-void	initiate_game(t_game *game, char *file);
+void	initiate_game(t_game *game);
 void	initiate_map(t_map *map);
-void	initiate_parser(t_parse *parser, t_game *game, char *file);
+void	initiate_parser(t_parse *parser, t_game *game);
 void	free_array(char **map);
 void	free_parser(t_parse *parser);
 void	close_game(t_game *game);

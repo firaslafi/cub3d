@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/03/04 22:34:53 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:36:26 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -479,7 +479,7 @@ int	checking_map(int ac, char **av, t_game *game)
 {
 	if (ac != 2)
 		return (finish(game, "Wrong input numbers!", NOSYSERR), EXIT_FAILURE);
-	initiate_game(game, av[1]);
+	initiate_game(game);
 	if (check_map_file_format_add(game, av[1]))
 		return (EXIT_FAILURE);
 	if (parsing_map(game))

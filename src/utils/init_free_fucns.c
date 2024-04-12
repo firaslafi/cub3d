@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/10 09:57:05 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:37:19 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ void	initiate_map(t_map *map)
 	map->texture.we = NULL;
 }
 
-void	initiate_parser(t_parse *parser, t_game *game, char *file)
+void	initiate_parser(t_parse *parser, t_game *game)
 {
-	parser->fd = open(file, O_RDONLY);
-	if (parser->fd == -1)
-		finish(game, "The cub file address is wrong.", SYSERR);
+	parser->fd = 0;
 	parser->line = NULL;
 	parser->split = NULL;
 	// parser->details_part = true;
@@ -119,10 +117,10 @@ void	initiate_hud(t_game *game)
 	game->hud.ply_flag = 0;
 }
 
-void	initiate_game(t_game *game, char *file)
+void	initiate_game(t_game *game)
 {
 	initiate_map(&game->map);
-	initiate_parser(&game->parser, game, file);
+	initiate_parser(&game->parser, game);
 	initiate_player(game);
 	initiate_ray(game);
 	// initiate_hud(game);

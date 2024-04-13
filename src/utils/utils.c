@@ -15,7 +15,6 @@
 
 double take_ply_angel(t_game *game)
 {
-	// printf("plyer position:%c\n",game->map.grid[game->ply.pos.y - 1][game->ply.pos.x]);
 	if (game->map.grid[game->ply.pos.y - 1][game->ply.pos.x] == 'N')
 		return (-M_PI / 2);
 	if (game->map.grid[game->ply.pos.y - 1][game->ply.pos.x] == 'E')

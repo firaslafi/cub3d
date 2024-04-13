@@ -65,15 +65,14 @@ void	initiate_map(t_map *map)
 	map->texture.we = NULL;
 }
 
-void	initiate_parser(t_parse *parser, t_game *game)
+void	initiate_parser(t_game *game)
 {
-	parser->fd = 0;
-	parser->line = NULL;
-	parser->split = NULL;
-	// parser->details_part = true;
-	parser->map_part = false;
-	parser->map = &game->map;
-	parser->game = game;
+	game->parser.fd = 0;
+	game->parser.line = NULL;
+	game->parser.split = NULL;
+	game->parser.map_part = false;
+	game->parser.map = &game->map;
+	game->parser.game = game;
 }
 
 void	initiate_player(t_game *game)
@@ -82,7 +81,7 @@ void	initiate_player(t_game *game)
 	game->ply.pos.y = 0;
 	game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
 	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
-	game->ply.angle = M_PI; // player angle
+	game->ply.angle = 0; // player angle
 	game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
 	game->ply.rot = 0;
 	game->ply.l_r = 0;
@@ -120,7 +119,7 @@ void	initiate_hud(t_game *game)
 void	initiate_game(t_game *game)
 {
 	initiate_map(&game->map);
-	initiate_parser(&game->parser, game);
+	initiate_parser(game);
 	initiate_player(game);
 	initiate_ray(game);
 	// initiate_hud(game);

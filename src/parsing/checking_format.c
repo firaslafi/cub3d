@@ -458,7 +458,8 @@ int	check_map_file_format_add(t_game *game, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (finish(game, "Cub file address is wrong!", SYSERR));
-	close(fd);
+	game->parser.fd = fd;
+	// close(fd);
 	str = ft_strdup(".cub\0");
 	i = (int)ft_strlen(file) - 4;
 	j = 0;

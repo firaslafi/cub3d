@@ -22,9 +22,9 @@ typedef struct s_map	t_map;
 
 void	initiate_game(t_game *game);
 void	initiate_map(t_map *map);
-void	initiate_parser(t_parse *parser, t_game *game);
+void	initiate_parser(t_game *game);
 void	free_array(char **map);
-void	free_parser(t_parse *parser);
+// void	free_parser(t_parse *parser);
 void	close_game(t_game *game);
 
 /**************errors_handling.c***************/
@@ -34,5 +34,9 @@ int		finish(t_game *game, char *msg, int no);
 
 /**************print_map_details.c***************/
 void	print_map_details(t_game *game);
+
+/**************utils.c***************/
+double take_ply_angel(t_game *game);
+
 
 #endif

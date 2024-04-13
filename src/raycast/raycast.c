@@ -66,7 +66,8 @@ void	init_the_player(t_game *game)
 	game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2;
 	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2;
 	game->ply.fov_rd = (FOV * M_PI) / 180;
-	game->ply.angle = M_PI;
+	// game->ply.angle = M_PI;
+	game->ply.angle = take_ply_angel(game);
 }
 
 // start the raycast, init player, run game loop and key hook

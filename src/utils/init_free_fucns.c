@@ -6,7 +6,7 @@
 /*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:02:04 by nnabaeei          #+#    #+#             */
-/*   Updated: 2024/04/12 13:37:19 by nnabaeei         ###   ########.fr       */
+/*   Updated: 2024/04/13 02:16:19 by nnabaeei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,19 @@ void print_map_details(t_game *game)
 	if (game->map.we_xpm)
 		printf(RED"WE:"RESET"%s\n", game->map.we_xpm);
 	if (game->map.ceiling_color[0])
-		printf(GREEN"Ceiling:"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
+		printf(GREEN"Ceiling:"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: " \
 		RESET"%d\n", game->map.ceiling_color[0], game->map.ceiling_color[1],
 			game->map.ceiling_color[2]);
 	if (game->map.floor_color[0])
-		printf(GREEN"Floor  :"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: "
+		printf(GREEN"Floor  :"RESET RED"R:"RESET"%d "RED"G:"RESET"%d "RED"B: " \
 		RESET"%d\n", game->map.floor_color[0], game->map.floor_color[1],
 			game->map.floor_color[2]);
 	if (game->map.grid)
 	{
 		for(int i = 0; game->map.grid[i]; i++)
-			// printf(GREEN"%s\n"RESET, game->map.grid[i]);
 			printf(GREEN"line[%d]: length:[%d]"RESET ORG"	|%s|\n", i, game->map.widths[i], game->map.grid[i]);
-	printf("longest line is: "RESET RED"%d\n"RESET, game->map.max_width);
-	printf(ORG"Player pos: x: "RESET RED"%d"RESET ORG" y: " RESET RED"%d\n"RESET, game->ply.pos.x, game->ply.pos.y);
+		printf("longest line is: "RESET RED"%d\n"RESET, game->map.max_width);
+		printf(ORG"Player pos: x: "RESET RED"%d"RESET ORG" y: " RESET RED"%d\n"RESET, game->ply.pos.x, game->ply.pos.y);
 	}
 }
 
@@ -79,10 +78,10 @@ void	initiate_player(t_game *game)
 {
 	game->ply.pos.x = 0;
 	game->ply.pos.y = 0;
-	game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2; // player x position in pixels in the center of the tile
-	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2; // player y position in pixels in the center of the tile
-	game->ply.angle = 0; // player angle
-	game->ply.fov_rd = (FOV * M_PI) / 180; // field of view in radians
+	game->ply.plyr_x = game->ply.pos.x * TILE_SIZE + TILE_SIZE / 2;
+	game->ply.plyr_y = game->ply.pos.y * TILE_SIZE + TILE_SIZE / 2;
+	game->ply.angle = 0;
+	game->ply.fov_rd = (FOV * M_PI) / 180;
 	game->ply.rot = 0;
 	game->ply.l_r = 0;
 	game->ply.u_d = 0;
@@ -140,7 +139,7 @@ void	free_array(char **map)
 		map[i++] = NULL;
 	}
 	free(map);
-	map = NULL;	
+	map = NULL;
 }
 
 void	free_texture(mlx_texture_t *texture)
@@ -152,7 +151,6 @@ void	free_texture(mlx_texture_t *texture)
 
 void	free_map(t_map *map)
 {
-	
 	if (map->no_xpm && map->no_xpm != NULL)
 		free(map->no_xpm);
 	if (map->no_xpm && map->so_xpm != NULL)
@@ -169,8 +167,6 @@ void	free_map(t_map *map)
 	free_texture(map->texture.so);
 	free_texture(map->texture.ea);
 	free_texture(map->texture.we);
-	// free(map);
-	// map = NULL;
 }
 
 void	free_image(mlx_t *mlx, mlx_image_t *image)
@@ -180,16 +176,15 @@ void	free_image(mlx_t *mlx, mlx_image_t *image)
 	image = NULL;
 }
 
-
 void	free_hud(t_game *game)
 {
 	if (game->mlx)
 	{
-		free_image(game->mlx, game->hud.circle); // delete the image
-		free_image(game->mlx, game->hud.circle_bck); // delete the image
-		free_image(game->mlx, game->hud.img_ci_bck); // delete the image
-		free_image(game->mlx, game->hud.img_ply); // delete the image
-		free_image(game->mlx, game->hud.img_wall); // delete the image
+		free_image(game->mlx, game->hud.circle);
+		free_image(game->mlx, game->hud.circle_bck);
+		free_image(game->mlx, game->hud.img_ci_bck);
+		free_image(game->mlx, game->hud.img_ply);
+		free_image(game->mlx, game->hud.img_wall);
 	}
 	free_texture(game->hud.w_dot);
 	free_texture(game->hud.b_dot);
@@ -202,8 +197,7 @@ void	free_mlx(t_game *game)
 	if (game->mlx != NULL)
 	{
 		mlx_delete_image(game->mlx, game->scn.img);
-		mlx_close_window(game->mlx); // close the window
-		// mlx_terminate(game->mlx);
+		mlx_close_window(game->mlx);
 		free(game->mlx);
 		game->mlx = NULL;
 	}

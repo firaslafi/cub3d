@@ -1,14 +1,24 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hud_main.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnabaeei <nnabaeei@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/11 14:58:36 by nnabaeei          #+#    #+#             */
+/*   Updated: 2024/04/13 02:22:56 by nnabaeei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/hud.h"
 
-bool draw_minimap(t_game *game)
+bool	draw_minimap(t_game *game)
 {
-	uint32_t i;
-	uint32_t j;
-	uint32_t x;
-	uint32_t y;
-	printf("hiiii\n");
+	uint32_t	i;
+	uint32_t	j;
+	uint32_t	x;
+	uint32_t	y;
+
 	i = -1;
 	while (++i < game->map.map_height)
 	{
@@ -23,9 +33,7 @@ bool draw_minimap(t_game *game)
 					return (finish(game, "map draw error", NOSYSERR), false);
 			}
 			else if (game->hud.map[i][j] == 'N')
-			// else if (ft_strchr("NEWS", game->hud.map[i][j]))
 			{
-				//printf("plyer x:%d and y:%d\n", game->ply.pos.x, game->ply.pos.y);
 				if (mlx_image_to_window(game->mlx, game->hud.img_ply, x + DOT_SIZE, y + DOT_SIZE) < 0)
 					return (finish(game, "map draw error", NOSYSERR), false);
 			}
@@ -44,17 +52,17 @@ void	move_minimap_player(t_game *game, int direction)
 		sample->img_ply->instances[0].y -= DOT_SIZE;
 		sample->pos->y--;
 	}
-	if (game->ply.u_d == -1 &&direction == DOWN && sample->map[(*sample->pos).y + 1][(*sample->pos).x] != '1')
+	if (game->ply.u_d == -1 && direction == DOWN && sample->map[(*sample->pos).y + 1][(*sample->pos).x] != '1')
 	{
 		sample->img_ply->instances[0].y += DOT_SIZE;
 		sample->pos->y++;
 	}
-	if (game->ply.l_r == -1 &&direction == LEFT && sample->map[sample->pos->y][sample->pos->x - 1] != '1')
+	if (game->ply.l_r == -1 && direction == LEFT && sample->map[sample->pos->y][sample->pos->x - 1] != '1')
 	{
 		sample->img_ply->instances[0].x -= DOT_SIZE;
 		sample->pos->x--;
 	}
-	if (game->ply.l_r == 1 &&direction == RIGHT && sample->map[sample->pos->y][sample->pos->x + 1] != '1')
+	if (game->ply.l_r == 1 && direction == RIGHT && sample->map[sample->pos->y][sample->pos->x + 1] != '1')
 	{
 		sample->img_ply->instances[0].x += DOT_SIZE;
 		sample->pos->x++;
@@ -75,8 +83,6 @@ void	mlx_minimap_key(mlx_key_data_t keydata, void *param)
 		move_minimap_player(game, RIGHT);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
 		move_minimap_player(game, LEFT);
-	// if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	// 	finish(game, "Project finished.", MSG);
 }
 
 void pad_map_lines(char **map, uint32_t map_height, uint32_t longest_line, uint32_t *line_lengths)
@@ -94,7 +100,7 @@ void pad_map_lines(char **map, uint32_t map_height, uint32_t longest_line, uint3
 		spaces_needed = longest_line - current_length;
 		padded_line = malloc((current_length + spaces_needed + 1) * sizeof(char));
 		if (padded_line == NULL)
-			return;
+			return ;
 		ft_strlcpy(padded_line, map[i], ft_strlen(map[i]) + 1);
 		j = current_length;
 		while (j < current_length + spaces_needed)
@@ -103,7 +109,6 @@ void pad_map_lines(char **map, uint32_t map_height, uint32_t longest_line, uint3
 		free(map[i]);
 		map[i] = padded_line;
 		line_lengths[i] = longest_line;
-		// i++;
 	}
 }
 
@@ -118,5 +123,5 @@ bool	mini_map(t_game	*game)
 	game->hud.ply = mlx_load_png("./texture/ply_8.png");
 	game->hud.img_ply = mlx_texture_to_image(game->mlx, game->hud.ply);
 	draw_minimap(game);
-	return(true);
+	return (true);
 }
